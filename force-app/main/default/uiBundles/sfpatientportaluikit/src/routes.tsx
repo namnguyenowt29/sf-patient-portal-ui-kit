@@ -1,15 +1,6 @@
 import type { RouteObject } from "react-router";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import Login from "./features/authentication/pages/Login";
-import Register from "./features/authentication/pages/Register";
-import ForgotPassword from "./features/authentication/pages/ForgotPassword";
-import ResetPassword from "./features/authentication/pages/ResetPassword";
-import ChangePassword from "./features/authentication/pages/ChangePassword";
 import PrivateRoute from "./features/authentication/layouts/privateRouteLayout";
 import { ROUTES } from "./features/authentication/authenticationConfig";
-import AccountSearch from "./pages/AccountSearch";
-import AccountObjectDetail from "./pages/AccountObjectDetailPage";
 import AuthAppLayout from "./features/authentication/layouts/AuthAppLayout";
 
 export const routes: RouteObject[] = [
@@ -19,31 +10,42 @@ export const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Home />,
+        lazy: async () => {
+          const { default: Component } = await import("./pages/Home");
+          return { Component };
+        },
         handle: { showInNavigation: true, label: "Home" },
       },
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: ROUTES.LOGIN.PATH,
-        element: <Login />,
+        lazy: async () => {
+          const { default: Component } = await import("./features/authentication/pages/Login");
+          return { Component };
+        },
         handle: { showInNavigation: false, label: "Login", title: ROUTES.LOGIN.TITLE },
       },
       {
         path: ROUTES.REGISTER.PATH,
-        element: <Register />,
+        lazy: async () => {
+          const { default: Component } = await import("./features/authentication/pages/Register");
+          return { Component };
+        },
         handle: { showInNavigation: false, title: ROUTES.REGISTER.TITLE },
       },
       {
         path: ROUTES.FORGOT_PASSWORD.PATH,
-        element: <ForgotPassword />,
+        lazy: async () => {
+          const { default: Component } = await import("./features/authentication/pages/ForgotPassword");
+          return { Component };
+        },
         handle: { showInNavigation: false, title: ROUTES.FORGOT_PASSWORD.TITLE },
       },
       {
         path: ROUTES.RESET_PASSWORD.PATH,
-        element: <ResetPassword />,
+        lazy: async () => {
+          const { default: Component } = await import("./features/authentication/pages/ResetPassword");
+          return { Component };
+        },
         handle: { showInNavigation: false, title: ROUTES.RESET_PASSWORD.TITLE },
       },
       {
@@ -59,18 +61,34 @@ export const routes: RouteObject[] = [
           },
           {
             path: ROUTES.CHANGE_PASSWORD.PATH,
-            element: <ChangePassword />,
+            lazy: async () => {
+              const { default: Component } = await import("./features/authentication/pages/ChangePassword");
+              return { Component };
+            },
             handle: { showInNavigation: false, title: ROUTES.CHANGE_PASSWORD.TITLE },
           },
         ],
       },
       {
         path: "accounts/:recordId",
-        element: <AccountObjectDetail />,
+        lazy: async () => {
+          const { default: Component } = await import("./pages/AccountObjectDetailPage");
+          return { Component };
+        },
       },
       {
         path: "accounts",
-        element: <AccountSearch />,
+        lazy: async () => {
+          const { default: Component } = await import("./pages/AccountSearch");
+          return { Component };
+        },
+      },
+      {
+        path: "*",
+        lazy: async () => {
+          const { default: Component } = await import("./pages/NotFound");
+          return { Component };
+        },
       },
     ],
   },
