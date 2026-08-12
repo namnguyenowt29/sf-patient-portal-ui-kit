@@ -9,6 +9,8 @@ import { formatDateOfBirth } from "@/features/authentication/utils/helpers";
 import { ContactDetailEditForm, ContactDetailFormValues } from "./ContactDetailEditForm";
 import { UrgentContactEditForm } from "./UrgentContactEditForm";
 import { EmployerEditForm, type EmployerFormValues } from "./EmployerEditForm";
+import { InsuranceEditForm, type InsuranceFormValues } from "./InsuranceEditForm";
+import { ProfileDocumentCard } from "./ProfileDocumentCard";
 
 const initialIdentity: IdentityFormValues = {
   salutation: "ms",
@@ -49,6 +51,13 @@ export function ProfileDetail() {
     postalCode: "1205",
     city: "Geneva",
   });
+  const [insuranceDetail, setInsuranceDetail] = useState<InsuranceFormValues>({
+    avsNumber: "756.0000.0000.00",
+    insurer: "CSS",
+    cardNumber: "12345678912345678912",
+    supplementaryInsurance: "",
+  });
+  const [identityDocumentFileName, setIdentityDocumentFileName] = useState("jeanne_dupont_identity.pdf");
   const identityDetailOptions: TOption[] = [
     { label: "Salutation", value: salutationLabels[identity.salutation] },
     { label: "First name", value: identity.firstName },
@@ -97,6 +106,12 @@ export function ProfileDetail() {
       value: employerDetail.city,
     },
   ];
+  const insuranceDetailOptions: TOption[] = [
+    { label: "AVS number", value: insuranceDetail.avsNumber },
+    { label: "Insurance provider", value: insuranceDetail.insurer },
+    { label: "Card number", value: insuranceDetail.cardNumber },
+    { label: "Supplementary insurance", value: insuranceDetail.supplementaryInsurance || "—" },
+  ];
 
   return (
     <Tabs defaultValue="overview" className={cn("mt-8")}>
@@ -104,7 +119,7 @@ export function ProfileDetail() {
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="contact-details">Contact Details</TabsTrigger>
         <TabsTrigger value="employer">Employer</TabsTrigger>
-        <TabsTrigger value="address">Address</TabsTrigger>
+        <TabsTrigger value="insurance">Insurance</TabsTrigger>
         <TabsTrigger value="security">Security</TabsTrigger>
       </TabsList>
 
@@ -126,7 +141,21 @@ export function ProfileDetail() {
           }
         </ProfileDetailItem>
         <ProfileDetailItem title="Identity Card">
-          {({ mode }) => mode === "display" && <ProfileDetailCardView options={[{ label: "pt1", value: "pt2" }]} />}
+          {({ mode, setMode }) => (
+            <ProfileDocumentCard
+              label="Identity document"
+              fileName={identityDocumentFileName}
+              mode={mode}
+              onCancel={() => setMode("display")}
+              onDownload={() => console.log("// Replace this mock callback with the file-download integration.")}
+              onSave={({ file, removeExistingDocument }) => {
+                setIdentityDocumentFileName((currentFileName) =>
+                  file ? file.name : removeExistingDocument ? "" : currentFileName
+                );
+                setMode("display");
+              }}
+            />
+          )}
         </ProfileDetailItem>
       </TabsContent>
 
@@ -184,9 +213,23 @@ export function ProfileDetail() {
         </ProfileDetailItem>
       </TabsContent>
 
-      <TabsContent value="address" className="rounded-lg border p-6">
-        <h3 className="text-lg font-semibold">Address</h3>
-        <p className="text-muted-foreground mt-2">Manage your home and mailing address.</p>
+      <TabsContent value="insurance">
+        <ProfileDetailItem title="Insurance">
+          {({ mode, setMode }) =>
+            mode === "display" ? (
+              <ProfileDetailCardView options={insuranceDetailOptions} />
+            ) : (
+              <InsuranceEditForm
+                defaultValues={insuranceDetail}
+                onCancel={() => setMode("display")}
+                onSave={(values) => {
+                  setInsuranceDetail(values);
+                  setMode("display");
+                }}
+              />
+            )
+          }
+        </ProfileDetailItem>
       </TabsContent>
 
       <TabsContent value="security" className="rounded-lg border p-6">
