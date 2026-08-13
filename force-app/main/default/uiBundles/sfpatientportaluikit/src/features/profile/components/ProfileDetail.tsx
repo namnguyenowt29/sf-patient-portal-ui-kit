@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+import type {
+  ContactDetailFormValues,
+  EmployerFormValues,
+  IdentityFormValues,
+  InsuranceFormValues,
+} from "@/components/forms";
 import { cn } from "@/lib/utils";
 import { TOption } from "@/types/common";
-import { IdentityEditForm, type IdentityFormValues } from "./IdentityEditForm";
+import { IdentityEditForm } from "./IdentityEditForm";
 import { ProfileDetailCardView } from "./ProfileDetailCardView";
 import { ProfileDetailItem } from "./ProfileDetailItem";
 import { formatDateOfBirth } from "@/features/authentication/utils/helpers";
-import { ContactDetailEditForm, ContactDetailFormValues } from "./ContactDetailEditForm";
+import { ContactDetailEditForm } from "./ContactDetailEditForm";
 import { UrgentContactEditForm } from "./UrgentContactEditForm";
-import { EmployerEditForm, type EmployerFormValues } from "./EmployerEditForm";
-import { InsuranceEditForm, type InsuranceFormValues } from "./InsuranceEditForm";
+import { EmployerEditForm } from "./EmployerEditForm";
+import { InsuranceEditForm } from "./InsuranceEditForm";
 import { ProfileDocumentCard } from "./ProfileDocumentCard";
 
 const initialIdentity: IdentityFormValues = {
@@ -130,7 +136,7 @@ export function ProfileDetail() {
               <ProfileDetailCardView options={identityDetailOptions} />
             ) : (
               <IdentityEditForm
-                initialValues={identity}
+                defaultValues={identity}
                 onCancel={() => setMode("display")}
                 onSave={(values) => {
                   setIdentity(values);

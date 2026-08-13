@@ -1,24 +1,24 @@
 import { Button, FieldGroup } from "@/components/ui";
-import { useAppForm } from "@/features/authentication/hooks/form";
+import { useAppForm } from "@/hooks/form";
 import { z } from "zod";
 
-const contactDetailFormSchema = z.object({
+const urgentContactFormSchema = z.object({
+  relationship: z.string(),
   telephone: z.string(),
-  address: z.string().nonempty({ error: "Address is required" }),
 });
 
-export type ContactDetailFormValues = z.infer<typeof contactDetailFormSchema>;
+export type UrgentContactFormSchema = z.infer<typeof urgentContactFormSchema>;
 
-type ContactDetailEditFormProps = {
-  readonly defaultValues: ContactDetailFormValues;
-  readonly onCancel: () => void;
-  readonly onSave: (value: ContactDetailFormValues) => void;
-};
+type UrgentContactEditFormProps = Readonly<{
+  defaultValues: UrgentContactFormSchema;
+  onCancel: () => void;
+  onSave: (value: UrgentContactFormSchema) => void;
+}>;
 
-export function ContactDetailEditForm({ defaultValues, onCancel, onSave }: ContactDetailEditFormProps) {
+export function UrgentContactEditForm({ defaultValues, onCancel, onSave }: UrgentContactEditFormProps) {
   const form = useAppForm({
     defaultValues,
-    validators: { onChange: contactDetailFormSchema, onSubmit: contactDetailFormSchema },
+    validators: { onChange: urgentContactFormSchema, onSubmit: urgentContactFormSchema },
     onSubmit: ({ value }) => onSave(value),
   });
 
@@ -32,8 +32,8 @@ export function ContactDetailEditForm({ defaultValues, onCancel, onSave }: Conta
         }}
       >
         <FieldGroup className="gap-5">
+          <form.AppField name="relationship">{(field) => <field.TextField label="Relationship" />}</form.AppField>
           <form.AppField name="telephone">{(field) => <field.TextField label="Telephone" />}</form.AppField>
-          <form.AppField name="address">{(field) => <field.TextField label="Address" />}</form.AppField>
         </FieldGroup>
         <div className="flex justify-end gap-3 pt-1">
           <Button variant="ghost" onClick={onCancel}>

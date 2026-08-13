@@ -4,15 +4,21 @@ import { FieldSet, FieldLegend } from "./field";
 import { RadioGroup, RadioGroupItem } from "./radio-group";
 import { Label } from "./label";
 
-type RadioFieldProps = Readonly<{
+type RadioFieldProps<TValue extends string> = Readonly<{
   label: string;
   name: string;
   options: TOption[];
-  value: string;
-  onValueChange: (value: string) => void;
+  value: TValue;
+  onValueChange: (value: TValue) => void;
 }>;
 
-export function RadioField({ label, name, options, value, onValueChange }: RadioFieldProps) {
+export function RadioField<TValue extends string>({
+  label,
+  name,
+  options,
+  value,
+  onValueChange,
+}: RadioFieldProps<TValue>) {
   const radioGroupId = useId();
 
   return (
