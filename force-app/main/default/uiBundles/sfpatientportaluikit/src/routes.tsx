@@ -11,7 +11,7 @@ export const routes: RouteObject[] = [
       {
         index: true,
         lazy: async () => {
-          const { default: Component } = await import("./pages/Home");
+          const { default: Component } = await import("./pages/home/Home");
           return { Component };
         },
         handle: { showInNavigation: true, label: "Home" },

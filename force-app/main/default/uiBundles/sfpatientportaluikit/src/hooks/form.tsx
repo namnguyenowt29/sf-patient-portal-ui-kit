@@ -1,11 +1,10 @@
-import { useId } from "react";
+import { type ComponentProps, type ReactNode, useId } from "react";
 import { createFormHookContexts, createFormHook } from "@tanstack/react-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../components/ui/field";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { AUTH_PLACEHOLDERS } from "../features/authentication/authenticationConfig";
 
-// Create form hook contexts
 export const { fieldContext, formContext, useFieldContext, useFormContext } = createFormHookContexts();
 
 // ============================================================================
@@ -13,15 +12,22 @@ export const { fieldContext, formContext, useFieldContext, useFormContext } = cr
 // ============================================================================
 
 interface TextFieldProps extends Omit<
-  React.ComponentProps<typeof Input>,
+  ComponentProps<typeof Input>,
   "name" | "value" | "onBlur" | "onChange" | "aria-invalid"
 > {
   label: string;
-  labelAction?: React.ReactNode;
-  description?: React.ReactNode;
+  labelAction?: ReactNode;
+  description?: ReactNode;
 }
 
-function TextField({ label, id: providedId, labelAction, description, type = "text", ...props }: TextFieldProps) {
+function TextField({
+  label,
+  id: providedId,
+  labelAction,
+  description,
+  type = "text",
+  ...props
+}: Readonly<TextFieldProps>) {
   const field = useFieldContext<string>();
   const generatedId = useId();
   const id = providedId ?? generatedId;
@@ -62,12 +68,16 @@ function PasswordField({
   autoComplete = "current-password",
   placeholder = AUTH_PLACEHOLDERS.PASSWORD,
   ...props
-}: Omit<TextFieldProps, "type">) {
+}: Readonly<Omit<TextFieldProps, "type">>) {
   return <TextField label={label} type="password" autoComplete={autoComplete} placeholder={placeholder} {...props} />;
 }
 
 /** Email field with preset type and autocomplete */
-function EmailField({ label, placeholder = AUTH_PLACEHOLDERS.EMAIL, ...props }: Omit<TextFieldProps, "type">) {
+function EmailField({
+  label,
+  placeholder = AUTH_PLACEHOLDERS.EMAIL,
+  ...props
+}: Readonly<Omit<TextFieldProps, "type">>) {
   return <TextField label={label} type="email" autoComplete="username" placeholder={placeholder} {...props} />;
 }
 
