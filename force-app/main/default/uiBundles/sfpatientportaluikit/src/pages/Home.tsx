@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { SearchBar } from "../features/object-search/components/SearchBar";
 import { Button } from "../components/ui/button";
+import {
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  Dialog,
+} from "@/components/ui";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -20,12 +29,27 @@ export default function HomePage() {
         <Button variant="outline" size="sm" onClick={() => navigate("/accounts")}>
           Browse All Accounts
         </Button>
-        <Button>Book appointment</Button>
+        <Button variant="secondary">Book appointment</Button>
       </div>
       <form onSubmit={handleSubmit} className="flex gap-2">
         <SearchBar placeholder="Search by name, phone, or industry..." value={text} handleChange={setText} />
         <Button type="submit">Search</Button>
       </form>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm">
+            Open dialog
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Example dialog</DialogTitle>
+            <DialogDescription>A simple dialog you can use to experiment with this UI component.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter showCloseButton />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

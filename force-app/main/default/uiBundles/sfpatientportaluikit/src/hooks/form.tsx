@@ -1,9 +1,9 @@
 import { useId } from "react";
 import { createFormHookContexts, createFormHook } from "@tanstack/react-form";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../../../components/ui/field";
-import { Input } from "../../../components/ui/input";
-import { cn } from "../../../lib/utils";
-import { AUTH_PLACEHOLDERS } from "../authenticationConfig";
+import { Field, FieldDescription, FieldError, FieldLabel } from "../components/ui/field";
+import { Input } from "../components/ui/input";
+import { cn } from "../lib/utils";
+import { AUTH_PLACEHOLDERS } from "../features/authentication/authenticationConfig";
 
 // Create form hook contexts
 export const { fieldContext, formContext, useFieldContext, useFormContext } = createFormHookContexts();
@@ -75,7 +75,7 @@ function EmailField({ label, placeholder = AUTH_PLACEHOLDERS.EMAIL, ...props }: 
 // Create Form Hook
 // ============================================================================
 
-export const { useAppForm } = createFormHook({
+export const { useAppForm, withFieldGroup } = createFormHook({
   fieldContext,
   formContext,
   fieldComponents: {

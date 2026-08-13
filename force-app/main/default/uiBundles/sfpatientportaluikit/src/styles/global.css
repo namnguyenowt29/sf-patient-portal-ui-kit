@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply antialiased bg-white;
+    @apply bg-white antialiased;
   }
 }
 
@@ -58,7 +58,7 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(98.511% 0.00011 271.152);
+  --background: oklch(97.015% 0.00011 271.152);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -66,7 +66,7 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(80.428% 0.09684 219.745);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(80.512% 0.0955 220.123 / 0.102);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);

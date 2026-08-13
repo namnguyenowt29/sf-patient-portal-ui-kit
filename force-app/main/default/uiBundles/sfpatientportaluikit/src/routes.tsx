@@ -54,10 +54,10 @@ export const routes: RouteObject[] = [
           {
             path: ROUTES.PROFILE.PATH,
             lazy: async () => {
-              const { default: Component } = await import("@/features/authentication/pages/profile/Profile");
+              const { default: Component } = await import("@/features/profile/Profile");
               return { Component };
             },
-            handle: { showInNavigation: false, label: "Profile", title: ROUTES.PROFILE.TITLE },
+            handle: { showInNavigation: true, label: "Profile", title: ROUTES.PROFILE.TITLE },
           },
           {
             path: ROUTES.CHANGE_PASSWORD.PATH,

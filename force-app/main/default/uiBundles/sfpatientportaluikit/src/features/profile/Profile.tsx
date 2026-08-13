@@ -146,7 +146,7 @@ export default function Profile() {
     <section className="container mx-auto w-full px-4 pt-12 md:px-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Profile</h2>
-        <Badge variant="secondary">Patient ID: 213xzs13221</Badge>
+        <Badge className="bg-gray-400">Patient ID: 213xzs13221</Badge>
       </div>
       <ProfileDetail />
     </section>
