@@ -238,7 +238,7 @@ export function PreAdmissionForm({
           </div>
         </div>
 
-        <div className="bg-background flex justify-end gap-2 border-t px-6 py-4">
+        <div className="flex justify-end gap-2 border-t border-gray-300 bg-white px-6 py-4">
           <Button type="button" variant="secondary" onClick={goToPreviousStep} disabled={currentStep === 1}>
             Back
           </Button>

@@ -84,6 +84,14 @@ export const routes: RouteObject[] = [
         },
       },
       {
+        path: "appointments",
+        lazy: async () => {
+          const { default: Component } = await import("./pages/Appointments");
+          return { Component };
+        },
+        handle: { showInNavigation: false, title: "Appointments" },
+      },
+      {
         path: "*",
         lazy: async () => {
           const { default: Component } = await import("./pages/NotFound");
