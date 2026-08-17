@@ -57,6 +57,7 @@ export {
   SelectField,
 } from "./select";
 export { Spinner } from "./spinner";
+export { Stepper, StepperItem } from "./stepper";
 export { Skeleton } from "./skeleton";
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from "./table";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
