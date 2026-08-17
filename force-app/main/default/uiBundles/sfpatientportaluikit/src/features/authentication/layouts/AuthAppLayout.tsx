@@ -1,6 +1,6 @@
 import SessionTimeoutValidator from "../sessionTimeout/SessionTimeoutValidator";
 import { AuthProvider } from "../context/AuthContext";
-import AppLayout from "../../../appLayout";
+import AppLayout from "../../../AppLayout";
 
 export default function AuthAppLayout() {
 	return (
