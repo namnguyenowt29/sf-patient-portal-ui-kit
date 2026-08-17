@@ -4,8 +4,9 @@
     <allowMembersToFlag>false</allowMembersToFlag>
     <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
     <communityRoles/>
+    <disablePvtPagesForPwdResetInLWR>false</disablePvtPagesForPwdResetInLWR>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
-    <emailSenderAddress>admin@company.com</emailSenderAddress>
+    <emailSenderAddress>admin@company.com.invalid</emailSenderAddress>
     <emailSenderName>sfpatientportaluikit</emailSenderName>
     <embeddedLoginEnabled>false</embeddedLoginEnabled>
     <enableApexCDNCaching>true</enableApexCDNCaching>
@@ -46,7 +47,8 @@
     </networkPageOverrides>
     <newSenderAddress>admin@company.com</newSenderAddress>
     <picassoSite>sfpatientportaluikit1</picassoSite>
-    <selfRegistration>false</selfRegistration>
+    <secondaryEmailSenderEnabled>false</secondaryEmailSenderEnabled>
+    <selfRegistration>true</selfRegistration>
     <sendWelcomeEmail>true</sendWelcomeEmail>
     <site>sfpatientportaluikit</site>
     <siteArchiveStatus>NotArchived</siteArchiveStatus>

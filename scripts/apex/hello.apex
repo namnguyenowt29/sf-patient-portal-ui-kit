@@ -5,6 +5,11 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
-string tempvar = 'Enter_your_name_here';
-System.debug('Hello World!');
-System.debug('My name is ' + tempvar);
+UIBundleRegistration.RegistrationRequest request = new UIBundleRegistration.RegistrationRequest();
+request.email = 'quocnam.dn29@gmail.com';
+request.firstName = 'Nam';
+request.lastName = 'Nguyen';
+request.password = 'Quocnam1103!';
+request.startUrl = '/';
+
+System.debug(UIBundleRegistration.registerUser(request));

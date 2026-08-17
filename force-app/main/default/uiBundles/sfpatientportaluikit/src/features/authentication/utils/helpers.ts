@@ -22,7 +22,7 @@ export async function handleApiResponse<T = unknown>(response: Response): Promis
     return {} as T;
   }
 
-  let data: any = null;
+  let data: unknown = null;
 
   const contentType = response.headers.get("content-type");
   if (contentType?.includes("application/json")) {
@@ -35,13 +35,24 @@ export async function handleApiResponse<T = unknown>(response: Response): Promis
 
   if (!response.ok) {
     console.error("API request failed", data);
-    if (data?.errors?.length) {
+    if (isErrorResponse(data)) {
       throw new ApiError(data.errors);
     }
     throw new Error("An unexpected error occurred");
   }
 
   return data as T;
+}
+
+function isErrorResponse(value: unknown): value is { errors: string[] } {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "errors" in value &&
+    Array.isArray(value.errors) &&
+    value.errors.length > 0 &&
+    value.errors.every((error) => typeof error === "string")
+  );
 }
 
 /**

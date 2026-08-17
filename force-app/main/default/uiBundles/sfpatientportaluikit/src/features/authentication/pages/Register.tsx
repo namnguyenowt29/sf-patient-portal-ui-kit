@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import { z } from "zod";
 import { CenteredPageLayout } from "../layout/centered-page-layout";
 import { AuthForm } from "../forms/auth-form";
 import { useAppForm } from "../../../hooks/form";
-import { createDataSDK } from "@salesforce/platform-sdk";
-import { ROUTES, AUTH_PLACEHOLDERS } from "../authenticationConfig";
-import { emailSchema, passwordSchema, getStartUrl, type AuthResponse } from "../authHelpers";
-import { ApiError, handleApiResponse } from "../utils/helpers";
+import { AUTH_PLACEHOLDERS, ROUTES } from "../authenticationConfig";
+import { emailSchema, getStartUrl, passwordSchema } from "../authHelpers";
+import { registerPatient } from "../api/authApi";
+import { ApiError } from "../utils/helpers";
 
 const registerSchema = z
   .object({
@@ -24,7 +24,6 @@ const registerSchema = z
   });
 
 export default function Register() {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [submitError, setSubmitError] = useState<React.ReactNode>(null);
 
@@ -35,47 +34,25 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      startUrl: getStartUrl(searchParams) || "",
+      startUrl: getStartUrl(searchParams),
     },
     validators: { onChange: registerSchema, onSubmit: registerSchema },
-    onSubmit: async ({ value: formFieldValues }) => {
+    onSubmit: async ({ value }) => {
       setSubmitError(null);
       try {
-        // [Dev Note] Salesforce Integration:
-        // We use the Data SDK fetch to make an authenticated (or guest) call to Salesforce.
-        // "/services/apexrest/auth/register" refers to a custom Apex Class exposed as a REST resource.
-        // You must ensure this Apex class exists in your org and handles registration
-        // (e.g., duplicate checks and user creation such as Site.createExternalUser).
-        const { confirmPassword: _confirmPassword, ...request } = formFieldValues;
-        const sdk = await createDataSDK();
-        const response = await sdk.fetch!("/services/apexrest/auth/register", {
-          method: "POST",
-          body: JSON.stringify({ request }),
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
+        const result = await registerPatient({
+          firstName: value.firstName.trim(),
+          lastName: value.lastName.trim(),
+          email: value.email.trim().toLowerCase(),
+          password: value.password,
+          startUrl: value.startUrl,
         });
-        const result = await handleApiResponse<AuthResponse>(response);
-        if (result?.redirectUrl) {
-          // Hard navigate to the URL which logs the new user in
-          window.location.replace(result.redirectUrl);
+        window.location.replace(result.redirectUrl);
+      } catch (error) {
+        if (error instanceof ApiError) {
+          setSubmitError(<ErrorList errors={error.errors} />);
         } else {
-          // In case redirectUrl is null, redirect to the login page
-          navigate(ROUTES.LOGIN.PATH, { replace: true });
-        }
-      } catch (err) {
-        console.error("Registration failed", err);
-        if (err instanceof ApiError) {
-          setSubmitError(
-            <ul>
-              {err.errors.map((e, i) => (
-                <li key={i}>{e}</li>
-              ))}
-            </ul>
-          );
-        } else {
-          setSubmitError("Registration failed");
+          setSubmitError("Registration failed. Please try again.");
         }
       }
     },
@@ -90,11 +67,7 @@ export default function Register() {
           description="Enter your information to create an account"
           error={submitError}
           submit={{ text: "Create an account", loadingText: "Creating account…" }}
-          footer={{
-            text: "Already have an account?",
-            link: ROUTES.LOGIN.PATH,
-            linkText: "Sign in",
-          }}
+          footer={{ text: "Already have an account?", link: ROUTES.LOGIN.PATH, linkText: "Sign in" }}
         >
           <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
             <form.AppField name="firstName">
@@ -138,5 +111,17 @@ export default function Register() {
         </AuthForm>
       </form.AppForm>
     </CenteredPageLayout>
+  );
+}
+
+function ErrorList({ errors }: Readonly<{ errors: string[] }>) {
+  return errors.length === 1 ? (
+    errors[0]
+  ) : (
+    <ul>
+      {errors.map((error) => (
+        <li key={error}>{error}</li>
+      ))}
+    </ul>
   );
 }

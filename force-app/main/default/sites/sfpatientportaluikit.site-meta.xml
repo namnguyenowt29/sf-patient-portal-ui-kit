@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
     <active>true</active>
     <allowGuestPaymentsApi>false</allowGuestPaymentsApi>
@@ -11,21 +11,23 @@
     <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
     <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
     <browserXssProtection>true</browserXssProtection>
-    <cachePublicVisualforcePagesInProxyServers>true</cachePublicVisualforcePagesInProxyServers>
+    <cachePublicVisualforcePagesInProxyServers
+  >true</cachePublicVisualforcePagesInProxyServers>
     <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
     <contentSniffingProtection>true</contentSniffingProtection>
     <enableAuraRequests>true</enableAuraRequests>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>InMaintenance</inMaintenancePage>
-     <indexPage>CommunitiesLanding</indexPage> 
+    <indexPage>CommunitiesLanding</indexPage>
     <masterLabel>sfpatientportaluikit</masterLabel>
     <redirectToCustomDomain>false</redirectToCustomDomain>
-    <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
+    <referrerPolicyOriginWhenCrossOrigin
+  >true</referrerPolicyOriginWhenCrossOrigin>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
-  <!--  <serverIsDown>SNA_U2rxy_sf_default_cdn_byo1</serverIsDown> -->
-   <!-- <siteAdmin>epic.out.d1d3a2d722c8@orgfarm.salesforce.com</siteAdmin> -->
-   <!--  <siteGuestRecordDefaultOwner>epic.out.d1d3a2d722c8@orgfarm.salesforce.com</siteGuestRecordDefaultOwner> -->
+    <siteAdmin>nnguyenquoc@openwt.com.demo.dev02</siteAdmin>
+    <siteGuestRecordDefaultOwner
+  >nnguyenquoc@openwt.com.demo.dev02</siteGuestRecordDefaultOwner>
     <siteType>ChatterNetwork</siteType>
     <urlPathPrefix>sfpatientportaluikitvforcesite</urlPathPrefix>
 </CustomSite>

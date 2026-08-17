@@ -1,5 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>UIBundleAuthUtils</members>
+        <members>UIBundleAuthUtilsTest</members>
+        <members>UIBundleChangePassword</members>
+        <members>UIBundleForgotPassword</members>
+        <members>UIBundleLogin</members>
+        <members>UIBundleLoginTest</members>
+        <members>UIBundleRegistration</members>
+        <members>UIBundleRegistrationTest</members>
+        <members>UIBundleSession</members>
+        <name>ApexClass</name>
+    </types>
     <types>
         <members>sfpatientportaluikit</members>
         <name>CustomSite</name>
@@ -17,8 +29,17 @@
         <name>Network</name>
     </types>
     <types>
-        <members>patientportalstarter</members>
+        <members>sfpatientportaluikit</members>
         <name>UIBundle</name>
-    </types
+    </types>
+    <types>
+        <members>OWT Customer User</members>
+        <members>sfpatientportaluikit Profile</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>Allow_External_User_view_their_data</members>
+        <name>SharingSet</name>
+    </types>
     <version>67.0</version>
 </Package>

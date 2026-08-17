@@ -1,5 +1,5 @@
+import { PrivateRoute } from "./features/authentication/layouts/PrivateRoute";
 import type { RouteObject } from "react-router";
-import PrivateRoute from "./features/authentication/layouts/privateRouteLayout";
 import { ROUTES } from "./features/authentication/authenticationConfig";
 import AuthAppLayout from "./features/authentication/layouts/AuthAppLayout";
 
@@ -67,6 +67,14 @@ export const routes: RouteObject[] = [
             },
             handle: { showInNavigation: false, title: ROUTES.CHANGE_PASSWORD.TITLE },
           },
+          {
+            path: "appointments",
+            lazy: async () => {
+              const { default: Component } = await import("./pages/Appointments");
+              return { Component };
+            },
+            handle: { showInNavigation: false, title: "Appointments" },
+          },
         ],
       },
       {
@@ -82,14 +90,6 @@ export const routes: RouteObject[] = [
           const { default: Component } = await import("./pages/AccountSearch");
           return { Component };
         },
-      },
-      {
-        path: "appointments",
-        lazy: async () => {
-          const { default: Component } = await import("./pages/Appointments");
-          return { Component };
-        },
-        handle: { showInNavigation: false, title: "Appointments" },
       },
       {
         path: "*",

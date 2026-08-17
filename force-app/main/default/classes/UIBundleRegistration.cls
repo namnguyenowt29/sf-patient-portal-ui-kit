@@ -1,91 +1,82 @@
-/**
- * REST endpoint for Web Applications for user self-registration.
- *
- * Endpoint: POST /services/apexrest/auth/register/
- *
- * Creates a new external user account, validates credentials against org password policy,
- * and returns a login URL for automatic session creation.
- *
- * Security: Uses 'without sharing' to allow guest users to check for duplicate usernames.
- */
 @RestResource(urlMapping='/auth/register')
 global without sharing class UIBundleRegistration {
+    @TestVisible
+    private static Boolean useTestDouble = false;
+    @TestVisible
+    private static String testProvisionedUserId;
+    @TestVisible
+    private static String testLoginRedirectUrl;
 
-    /**
-     * Registers a new external user and logs them in.
-     * @param request The registration request containing user details.
-     * @return SuccessResponse or ErrorResponse.
-     */
     @HttpPost
-    global static RegistrationResponse registerUser(RegistrationRequest request) {
-        Savepoint sp = Database.setSavepoint();
+    global static UIBundleAuthUtils.AuthResponse registerUser(
+        RegistrationRequest request
+    ) {
+        Savepoint savepoint = Database.setSavepoint();
+        System.debug('start register user');
         try {
+            if (request == null) {
+                throw new UIBundleAuthUtils.AuthException(
+                    400,
+                    'Registration details are required.'
+                );
+            }
             request.validate();
 
-            User u = new User(
+            User portalUser = new User(
                 Username = request.email,
                 Email = request.email,
                 FirstName = request.firstName,
                 LastName = request.lastName,
-                // Generate unique nickname: first initial + up to 20 chars of last name + 4 random digits
-                CommunityNickname = request.firstName.left(1) + request.lastName.left(20) +
-                    String.valueOf(Crypto.getRandomInteger()).left(4)
+                CommunityNickname = buildCommunityNickname(
+                    request.firstName,
+                    request.lastName
+                )
             );
+            System.debug('portalUser' + portalUser);
+            validatePassword(portalUser, request.password);
 
-            validatePassword(u, request.password);
-            createUser(u, request.password);
+            String userId = provisionPersonAccountUser(
+                portalUser,
+                // resolveConfiguredOwnerId(),
+                '005fj00000J8K53AAF',
+                request.password
+            );
+            if (String.isBlank(userId)) {
+                throw new UIBundleAuthUtils.AuthException(
+                    500,
+                    'Can\'t create user id portal'
+                );
+            }
 
-            String startUrl = UIBundleAuthUtils.getSanitizedStartUrl(request.startUrl, Site.getPathPrefix());
-            PageReference pageRef = Site.login(request.email, request.password, startUrl);
-
-            return new SuccessRegistrationResponse(pageRef?.getUrl());
+            String startUrl = UIBundleAuthUtils.getSanitizedStartUrl(
+                request.startUrl,
+                Site.getPathPrefix()
+            );
+            String redirectUrl = createLoginRedirect(
+                request.email,
+                request.password,
+                startUrl
+            );
+            if (String.isBlank(redirectUrl)) {
+                throw new UIBundleAuthUtils.AuthException(
+                    500,
+                    'can\'t redirect'
+                );
+            }
+            return new UIBundleAuthUtils.AuthSuccessResponse(redirectUrl);
         } catch (UIBundleAuthUtils.AuthException ex) {
-            Database.rollback(sp);
-            RestContext.response.statusCode = ex.statusCode;
-            return new ErrorRegistrationResponse(ex.messages);
+            Database.rollback(savepoint);
+            UIBundleAuthUtils.setResponseStatus(ex.statusCode);
+            return UIBundleAuthUtils.failure(ex.messages);
         } catch (Exception ex) {
-            Database.rollback(sp);
-            RestContext.response.statusCode = 500;
-            return new ErrorRegistrationResponse(ex.getMessage());
+            Database.rollback(savepoint);
+
+            UIBundleAuthUtils.debugLog(ex, LoggingLevel.ERROR);
+            UIBundleAuthUtils.setResponseStatus(500);
+            return UIBundleAuthUtils.failure('Auth failure' + ex.getMessage());
         }
     }
 
-    /**
-     * Base response class for registration.
-     */
-    global abstract class RegistrationResponse {
-    }
-
-    /**
-     * Success response with redirect URL.
-     */
-    global class SuccessRegistrationResponse extends RegistrationResponse {
-        global Boolean success = true;
-        global String redirectUrl;
-
-        global SuccessRegistrationResponse(String redirectUrl) {
-            this.redirectUrl = redirectUrl;
-        }
-    }
-
-    /**
-     * Error response with error messages.
-     */
-    global class ErrorRegistrationResponse extends RegistrationResponse {
-        global List<String> errors;
-
-        global ErrorRegistrationResponse(List<String> errors) {
-            this.errors = new List<String>(errors);
-        }
-
-        global ErrorRegistrationResponse(String error) {
-            this.errors = new List<String>{ error };
-        }
-    }
-
-    /**
-     * Request payload for user registration.
-     */
     global class RegistrationRequest {
         global String email;
         global String firstName;
@@ -93,70 +84,124 @@ global without sharing class UIBundleRegistration {
         global String password;
         global String startUrl;
 
-        /**
-         * Trims fields and validates required fields and business rules.
-         * @throws UIBundleAuthUtils.AuthException if validation fails.
-         */
         public void validate() {
-            email = email?.trim()?.toLowerCase();
-            firstName = firstName?.trim();
-            lastName = lastName?.trim();
-            startUrl = startUrl?.trim();
+            email = email == null ? null : email.trim().toLowerCase();
+            firstName = firstName == null ? null : firstName.trim();
+            lastName = lastName == null ? null : lastName.trim();
+            startUrl = startUrl == null ? null : startUrl.trim();
 
             List<String> errors = new List<String>();
-            if (String.isBlank(firstName)) { errors.add('First name is required.'); }
-            if (String.isBlank(lastName)) { errors.add('Last name is required.'); }
-            if (String.isBlank(password)) { errors.add('Password is required.'); }
-            if (!Site.isValidUserName(email)) { errors.add('Email is invalid.'); }
-            else if (!isUserUnique(email)) {
-                errors.add('A user with this email already exists.');
-            }
+            if (String.isBlank(firstName))
+                errors.add('First name is required.');
+            if (String.isBlank(lastName))
+                errors.add('Last name is required.');
+            if (String.isBlank(password))
+                errors.add('Password is required.');
+            if (String.isBlank(email) || !Site.isValidUserName(email))
+                errors.add('Email is invalid.');
+            if (!UIBundleAuthUtils.isSafeRelativeStartUrl(startUrl))
+                errors.add('Return URL is invalid.');
             if (!errors.isEmpty()) {
                 throw new UIBundleAuthUtils.AuthException(400, errors);
             }
         }
     }
 
-    /**
-     * Validates password against org password policy.
-     * @param user The user record.
-     * @param password The password to validate.
-     * @throws UIBundleAuthUtils.AuthException if password does not meet requirements.
-     */
-    private static void validatePassword(User user, String password) {
+    private static void validatePassword(User portalUser, String password) {
+        if (Test.isRunningTest() && useTestDouble)
+            return;
         try {
-            Site.validatePassword(user, password, password);
-        } catch (System.SecurityException ex) {
-            throw new UIBundleAuthUtils.AuthException(400, ex.getMessage());
+            Site.validatePassword(portalUser, password, password);
+        } catch (Exception ex) {
+            UIBundleAuthUtils.debugLog(ex, LoggingLevel.WARN);
+            throw new UIBundleAuthUtils.AuthException(
+                400,
+                'Password does not meet the site requirements.'
+            );
         }
     }
 
-    /**
-     * Creates the external user account.
-     * @param u The user record.
-     * @param password The password for the new user.
-     * @return The new user's ID.
-     * @throws UIBundleAuthUtils.AuthException if user creation fails.
-     */
-    private static String createUser(User u, String password) {
-        String userId;
+    private static String provisionPersonAccountUser(
+        User portalUser,
+        Id ownerId,
+        String password
+    ) {
+        System.debug('provisionPersonAccountUser');
+
+        if (Test.isRunningTest() && useTestDouble) {
+            System.debug('testProvisionedUserId' + testProvisionedUserId);
+            return testProvisionedUserId;
+        }
         try {
-            userId = Site.createExternalUser(u, null, password);
-        } catch (Site.ExternalUserCreateException ex) {
-            throw new UIBundleAuthUtils.AuthException(500, ex.getDisplayMessages());
+            System.debug('start createPersonAccountPortalUser');
+            Id personAccountId = Site.createPersonAccountPortalUser(
+                portalUser,
+                ownerId,
+                password
+            );
+
+            System.debug('personAccountId@@' + personAccountId);
+            return personAccountId;
+        } catch (Exception ex) {
+            System.debug(ex.getMessage());
+            UIBundleAuthUtils.debugLog(ex, LoggingLevel.ERROR);
+            throw new UIBundleAuthUtils.AuthException(500, ex.getMessage());
         }
-        if (userId == null) {
-            throw new UIBundleAuthUtils.AuthException(500, 'Could not register new user.');
-        }
-        return userId;
     }
 
-    /**
-     * Checks if a username is unique (not already taken).
-     * @param username The username to check.
-     * @return {@code true} if unique, {@code false} if already exists.
-     */
-    private static Boolean isUserUnique(String username) {
-        return [SELECT Id FROM User WHERE Username = :username LIMIT 1].isEmpty();
+    private static String createLoginRedirect(
+        String username,
+        String password,
+        String startUrl
+    ) {
+        if (Test.isRunningTest() && useTestDouble)
+            return testLoginRedirectUrl;
+        try {
+            PageReference loginResult = Site.login(
+                username,
+                password,
+                startUrl
+            );
+            return loginResult == null ? null : loginResult.getUrl();
+        } catch (Exception ex) {
+            UIBundleAuthUtils.debugLog(ex, LoggingLevel.ERROR);
+            return null;
+        }
+    }
+
+    private static Id resolveConfiguredOwnerId() {
+        if (Test.isRunningTest() && useTestDouble) {
+            return UserInfo.getUserId();
+        }
+        // Demo-only owner selection. Replace with deployable configuration before production use.
+        List<User> owners = [
+            SELECT Id
+            FROM User
+            WHERE
+                Name = 'Nam Nguyen'
+                AND IsActive = TRUE
+                AND Profile.Name = 'System Administrator'
+                AND UserRole.Name = 'CEO'
+            LIMIT 2
+        ];
+        if (owners.size() != 1) {
+            throw new UIBundleAuthUtils.AuthException(
+                500,
+                'can\'t query admin'
+            );
+        }
+        return owners[0].Id;
+    }
+
+    private static String buildCommunityNickname(
+        String firstName,
+        String lastName
+    ) {
+        String stem = (firstName.left(1) + lastName)
+            .replaceAll('[^A-Za-z0-9]', '');
+        if (String.isBlank(stem))
+            stem = 'Patient';
+        return stem.left(28) +
+            EncodingUtil.convertToHex(Crypto.generateAesKey(128)).left(12);
     }
 }

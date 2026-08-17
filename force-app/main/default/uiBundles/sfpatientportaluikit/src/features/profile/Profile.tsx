@@ -6,7 +6,6 @@
 // import { ROUTES } from "../authenticationConfig";
 // import { useAppForm } from "../../hooks/form";
 // import { emailSchema } from "../../authHelpers";
-// import { useUser } from "../../context/AuthContext";
 // import { fetchUserProfile, updateUserProfile } from "../../api/userProfileApi";
 // import { Skeleton } from "../../../../components/ui/skeleton";
 // import { Field, FieldLabel } from "../../../../components/ui/field";
@@ -67,7 +66,6 @@ import { ProfileDetail } from "./components/ProfileDetail";
 // }
 
 export default function Profile() {
-  // const user = useUser();
   // const [profile, setProfile] = useState<ProfileFormValues | null>(null);
   // const [loadError, setLoadError] = useState<string | null>(null);
   // const [success, setSuccess] = useState(false);
