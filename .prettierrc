@@ -9,9 +9,9 @@
     {
       "files": "*.{cls,trigger}",
       "options": {
-        "parser": "apex",
         "apexInsertFinalNewline": false,
-        "tabWidth": 4
+        "tabWidth": 4,
+        "printWidth": 120
       }
     },
     {

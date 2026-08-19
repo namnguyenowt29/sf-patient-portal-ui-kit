@@ -1,21 +1,5 @@
-/**
- * REST endpoint for Web Applications for user self-registration.
- *
- * Endpoint: POST /services/apexrest/auth/register/
- *
- * Creates a new external user account, validates credentials against org password policy,
- * and returns a login URL for automatic session creation.
- *
- * Security: Uses 'without sharing' to allow guest users to check for duplicate usernames.
- */
 @RestResource(urlMapping='/auth/register')
 global without sharing class UIBundleRegistration {
-
-    /**
-     * Registers a new external user and logs them in.
-     * @param request The registration request containing user details.
-     * @return SuccessResponse or ErrorResponse.
-     */
     @HttpPost
     global static RegistrationResponse registerUser(RegistrationRequest request) {
         Savepoint sp = Database.setSavepoint();
@@ -27,8 +11,8 @@ global without sharing class UIBundleRegistration {
                 Email = request.email,
                 FirstName = request.firstName,
                 LastName = request.lastName,
-                // Generate unique nickname: first initial + up to 20 chars of last name + 4 random digits
-                CommunityNickname = request.firstName.left(1) + request.lastName.left(20) +
+                CommunityNickname = request.firstName.left(1) +
+                    request.lastName.left(20) +
                     String.valueOf(Crypto.getRandomInteger()).left(4)
             );
 
@@ -104,11 +88,18 @@ global without sharing class UIBundleRegistration {
             startUrl = startUrl?.trim();
 
             List<String> errors = new List<String>();
-            if (String.isBlank(firstName)) { errors.add('First name is required.'); }
-            if (String.isBlank(lastName)) { errors.add('Last name is required.'); }
-            if (String.isBlank(password)) { errors.add('Password is required.'); }
-            if (!Site.isValidUserName(email)) { errors.add('Email is invalid.'); }
-            else if (!isUserUnique(email)) {
+            if (String.isBlank(firstName)) {
+                errors.add('First name is required.');
+            }
+            if (String.isBlank(lastName)) {
+                errors.add('Last name is required.');
+            }
+            if (String.isBlank(password)) {
+                errors.add('Password is required.');
+            }
+            if (!Site.isValidUserName(email)) {
+                errors.add('Email is invalid.');
+            } else if (!isUserUnique(email)) {
                 errors.add('A user with this email already exists.');
             }
             if (!errors.isEmpty()) {

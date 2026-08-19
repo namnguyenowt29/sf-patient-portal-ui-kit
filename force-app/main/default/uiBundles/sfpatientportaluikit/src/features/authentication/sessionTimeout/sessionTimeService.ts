@@ -9,10 +9,10 @@ import { SESSION_CONFIG } from "./sessionTimeoutConfig";
  * Response from SessionTimeServlet API
  */
 export interface SessionResponse {
-	/** Session phase */
-	sp: number;
-	/** Seconds remaining in session */
-	sr: number;
+  /** Session phase */
+  sp: number;
+  /** Seconds remaining in session */
+  sr: number;
 }
 
 /**
@@ -23,28 +23,28 @@ export interface SessionResponse {
  * @returns Parsed session response, or undefined if parsing fails
  */
 function parseResponseResult(text: string): SessionResponse | undefined {
-	let cleanedText = text;
+  let cleanedText = text;
 
-	// Strip CSRF protection prefix if present
-	if (cleanedText.startsWith(SESSION_CONFIG.CSRF_TOKEN)) {
-		cleanedText = cleanedText.substring(SESSION_CONFIG.CSRF_TOKEN.length);
-	}
+  // Strip CSRF protection prefix if present
+  if (cleanedText.startsWith(SESSION_CONFIG.CSRF_TOKEN)) {
+    cleanedText = cleanedText.substring(SESSION_CONFIG.CSRF_TOKEN.length);
+  }
 
-	// Trim whitespace
-	cleanedText = cleanedText.trim();
+  // Trim whitespace
+  cleanedText = cleanedText.trim();
 
-	try {
-		const parsed = JSON.parse(cleanedText) as SessionResponse;
+  try {
+    const parsed = JSON.parse(cleanedText) as SessionResponse;
 
-		// Validate response structure
-		if (typeof parsed.sp !== "number" || typeof parsed.sr !== "number") {
-			throw new Error("Invalid response structure: missing sp or sr properties");
-		}
+    // Validate response structure
+    if (typeof parsed.sp !== "number" || typeof parsed.sr !== "number") {
+      throw new TypeError("Invalid response structure: missing sp or sr properties");
+    }
 
-		return parsed;
-	} catch (error) {
-		console.error("[sessionTimeService] Failed to parse response:", error, "Text:", cleanedText);
-	}
+    return parsed;
+  } catch (error) {
+    console.error("[sessionTimeService] Failed to parse response:", error, "Text:", cleanedText);
+  }
 }
 
 /**
@@ -57,53 +57,50 @@ function parseResponseResult(text: string): SessionResponse | undefined {
  * @param extend - Whether to extend the session (updateTimedOutSession param)
  * @returns Session response with remaining time, or undefined on failure
  */
-async function callSessionTimeServlet(
-	basePath: string,
-	extend: boolean = false,
-): Promise<SessionResponse | undefined> {
-	// Build URL with cache-busting timestamp
-	const timestamp = Date.now();
-	let url = `${basePath}${SESSION_CONFIG.SERVLET_URL}?buster=${timestamp}`;
+async function callSessionTimeServlet(basePath: string, extend: boolean = false): Promise<SessionResponse | undefined> {
+  // Build URL with cache-busting timestamp
+  const timestamp = Date.now();
+  let url = `${basePath}${SESSION_CONFIG.SERVLET_URL}?buster=${timestamp}`;
 
-	if (extend) {
-		url += "&updateTimedOutSession=true";
-	}
+  if (extend) {
+    url += "&updateTimedOutSession=true";
+  }
 
-	try {
-		const response = await fetch(url, {
-			method: "GET",
-			credentials: "same-origin",
-			cache: "no-cache",
-			headers: {
-				"X-Requested-With": "XMLHttpRequest",
-			},
-		});
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-cache",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    });
 
-		if (!response.ok) {
-			console.error(`[sessionTimeService] HTTP ${response.status}: ${response.statusText}`);
-			return undefined;
-		}
+    if (!response.ok) {
+      console.error(`[sessionTimeService] HTTP ${response.status}: ${response.statusText}`);
+      return undefined;
+    }
 
-		const contentType = response.headers.get("content-type");
-		if (contentType && !contentType.includes("text") && !contentType.includes("json")) {
-			console.error(`[sessionTimeService] Unexpected content type: ${contentType}`);
-			return undefined;
-		}
+    const contentType = response.headers.get("content-type");
+    if (contentType && !contentType.includes("text") && !contentType.includes("json")) {
+      console.error(`[sessionTimeService] Unexpected content type: ${contentType}`);
+      return undefined;
+    }
 
-		const text = await response.text();
-		const parsed = parseResponseResult(text);
-		if (!parsed) {
-			return undefined;
-		}
+    const text = await response.text();
+    const parsed = parseResponseResult(text);
+    if (!parsed) {
+      return undefined;
+    }
 
-		return {
-			sp: parsed.sp,
-			sr: Math.max(0, parsed.sr - SESSION_CONFIG.LATENCY_BUFFER_SECONDS),
-		};
-	} catch (error) {
-		console.error("[sessionTimeService] API call failed:", error);
-		return undefined;
-	}
+    return {
+      sp: parsed.sp,
+      sr: Math.max(0, parsed.sr - SESSION_CONFIG.LATENCY_BUFFER_SECONDS),
+    };
+  } catch (error) {
+    console.error("[sessionTimeService] API call failed:", error);
+    return undefined;
+  }
 }
 
 /**
@@ -119,10 +116,8 @@ async function callSessionTimeServlet(
  *   showWarning();
  * }
  */
-export async function pollSessionTimeServlet(
-	basePath: string,
-): Promise<SessionResponse | undefined> {
-	return callSessionTimeServlet(basePath, false);
+export async function pollSessionTimeServlet(basePath: string): Promise<SessionResponse | undefined> {
+  return callSessionTimeServlet(basePath, false);
 }
 
 /**
@@ -139,7 +134,7 @@ export async function pollSessionTimeServlet(
  * }
  */
 export async function extendSessionTime(basePath: string): Promise<SessionResponse | undefined> {
-	return callSessionTimeServlet(basePath, true);
+  return callSessionTimeServlet(basePath, true);
 }
 
 /**

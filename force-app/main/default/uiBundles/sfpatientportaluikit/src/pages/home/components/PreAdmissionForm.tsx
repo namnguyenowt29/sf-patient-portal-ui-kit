@@ -58,7 +58,7 @@ const steps = [
     label: "Contact details",
     title: "Your contact details",
     schema: contactDetailFormSchema,
-    fieldNames: ["telephone", "address"],
+    fieldNames: ["telephone", "mailingStreet", "mailingCity", "mailingState"],
   },
   {
     number: 3,
