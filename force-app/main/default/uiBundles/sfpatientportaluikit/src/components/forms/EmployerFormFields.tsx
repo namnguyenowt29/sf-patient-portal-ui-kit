@@ -4,10 +4,10 @@ import { withFieldGroup } from "@/hooks/form";
 import { TOption } from "@/types/common";
 
 export const employerFormSchema = z.object({
-  profession: z.string().trim().min(1, "Profession is required"),
-  employer: z.string().trim().min(1, "Employer is required"),
-  postalCode: z.string().trim().min(1, "Postal code is required"),
-  city: z.string().trim().min(1, "City is required"),
+  profession: z.string().trim().min(1, "Profession is required").nullable(),
+  employer: z.string().trim().min(1, "Employer is required").nullable(),
+  postalCode: z.string().trim().min(1, "Postal code is required").nullable(),
+  city: z.string().trim().min(1, "City is required").nullable(),
 });
 
 export type EmployerFormValues = z.infer<typeof employerFormSchema>;
@@ -42,7 +42,7 @@ export const EmployerFormFields = withFieldGroup({
           <SelectField
             label="Profession"
             options={professionOptions}
-            value={field.state.value}
+            value={field.state.value ?? ""}
             onChange={field.handleChange}
           />
         )}
@@ -55,7 +55,7 @@ export const EmployerFormFields = withFieldGroup({
       </group.AppField>
       <group.Field name="city">
         {(field) => (
-          <SelectField label="City" options={cityOptions} value={field.state.value} onChange={field.handleChange} />
+          <SelectField label="City" options={cityOptions} value={field.state.value ?? ""} onChange={field.handleChange} />
         )}
       </group.Field>
     </FieldGroup>

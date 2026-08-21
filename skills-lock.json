@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "platform-custom-field-generate": {
+      "source": "forcedotcom/sf-skills",
+      "sourceType": "github",
+      "skillPath": "skills/platform-custom-field-generate/SKILL.md",
+      "computedHash": "7a7a245bdb54540d3dd048884de46952876ae07a15f96f44e767ea7d92af1752"
+    },
+    "platform-custom-object-generate": {
+      "source": "forcedotcom/sf-skills",
+      "sourceType": "github",
+      "skillPath": "skills/platform-custom-object-generate/SKILL.md",
+      "computedHash": "0db475c7dc66b9e858b1bdf54468d765666f28b622ed84d9432ce0d46d96680f"
+    }
+  }
+}

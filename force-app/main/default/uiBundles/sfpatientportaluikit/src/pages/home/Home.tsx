@@ -120,7 +120,7 @@ export default function HomePage() {
       <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
         <DialogContent className="h-dvh w-dvw max-w-none rounded-none p-0 sm:max-w-none [&>button]:hidden">
           <div className="flex h-full min-h-0 flex-col">
-            <DialogHeader className="flex-row justify-between border-b border-gray-300 bg-white p-6 pr-14">
+            <DialogHeader className="flex-row justify-between border-b border-gray-300 bg-white p-6">
               <div className="header-left">
                 <DialogTitle>Pre-admission</DialogTitle>
                 <DialogDescription>Complete your details before your appointment.</DialogDescription>

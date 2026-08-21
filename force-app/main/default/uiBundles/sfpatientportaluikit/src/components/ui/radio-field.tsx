@@ -35,7 +35,7 @@ export function RadioField<TValue extends string>({
       >
         {options.map((option) => (
           <div key={option.value} className="flex items-center gap-2">
-            <RadioGroupItem id={`${radioGroupId}-${option.value}`} value={option.value} />
+            <RadioGroupItem id={`${radioGroupId}-${option.value}`} value={option.value ?? ""} />
             <Label htmlFor={`${radioGroupId}-${option.value}`} className="cursor-pointer text-xs font-normal">
               {option.label}
             </Label>

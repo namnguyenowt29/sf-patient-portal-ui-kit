@@ -4,7 +4,7 @@ import { FooterLink } from "../footers/footer-link";
 import { SubmitButton } from "./submit-button";
 import { CardLayout } from "../../../components/layouts/card-layout";
 import { useFormContext } from "../../../hooks/form";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useId } from "react";
 
 /**

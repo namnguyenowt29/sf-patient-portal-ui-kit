@@ -3,10 +3,10 @@ import { FieldGroup } from "@/components/ui";
 import { withFieldGroup } from "@/hooks/form";
 
 export const insuranceFormSchema = z.object({
-  avsNumber: z.string().trim().min(1, "AVS number is required"),
-  insurer: z.string().trim().min(1, "Insurance provider is required"),
-  cardNumber: z.string().trim().min(1, "Card number is required"),
-  supplementaryInsurance: z.string().trim(),
+  avsNumber: z.string().trim().min(1, "AVS number is required").nullable(),
+  insurer: z.string().trim().min(1, "Insurance provider is required").nullable(),
+  cardNumber: z.string().trim().min(1, "Card number is required").nullable(),
+  supplementaryInsurance: z.string().trim().nullable(),
 });
 
 export type InsuranceFormValues = z.infer<typeof insuranceFormSchema>;

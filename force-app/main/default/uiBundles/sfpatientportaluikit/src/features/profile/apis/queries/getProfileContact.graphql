@@ -1,0 +1,105 @@
+query GetProfileContact($contactId: ID!) {
+  uiapi {
+    query {
+      Contact(first: 1, where: { Id: { eq: $contactId } }) {
+        edges {
+          node {
+            Id @optional
+            Salutation @optional {
+              value
+              displayValue
+            }
+            FirstName @optional {
+              value
+              displayValue
+            }
+            LastName @optional {
+              value
+              displayValue
+            }
+            Birthdate @optional {
+              value
+              displayValue
+            }
+            Place_Of_Birth__c @optional {
+              value
+              displayValue
+            }
+            Nationality__c @optional {
+              value
+              displayValue
+            }
+            GenderIdentity @optional {
+              value
+              displayValue
+            }
+            Marital_Status__c @optional {
+              value
+              displayValue
+            }
+            Phone @optional {
+              value
+              displayValue
+            }
+            MailingStreet @optional {
+              value
+              displayValue
+            }
+            MailingState @optional {
+              value
+              displayValue
+            }
+            MailingCity @optional {
+              value
+              displayValue
+            }
+            Urgent_Contact_Relationship__c @optional {
+              value
+              displayValue
+            }
+            OtherPhone @optional {
+              value
+              displayValue
+            }
+            Title @optional {
+              value
+              displayValue
+            }
+            Employer__c @optional {
+              value
+              displayValue
+            }
+            MailingPostalCode @optional {
+              value
+              displayValue
+            }
+            MailingCountry @optional {
+              value
+              displayValue
+            }
+            AVS_Number__c @optional {
+              value
+              displayValue
+            }
+            Insurance_Provider__c @optional {
+              value
+              displayValue
+            }
+            Card_Number__c @optional {
+              value
+              displayValue
+            }
+            Supplementary_Insurance__c @optional {
+              value
+              displayValue
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}

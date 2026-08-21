@@ -25,8 +25,17 @@
         <name>Network</name>
     </types>
     <types>
+        <members>sfpatientportaluikit Profile</members>
+        <members>OWT Customer Login User</members>
+        <name>Profile</name>
+    </types>
+    <types>
         <members>sfpatientportaluikit</members>
         <name>UIBundle</name>
+    </types>
+    <types>
+        <members>Allow_External_User_view_their_data</members>
+        <name>SharingSet</name>    
     </types>
     <version>67.0</version>
 </Package>

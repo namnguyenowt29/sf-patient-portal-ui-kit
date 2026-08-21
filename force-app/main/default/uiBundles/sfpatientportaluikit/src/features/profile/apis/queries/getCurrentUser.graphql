@@ -1,0 +1,19 @@
+query GetUserContact($userId: ID!) {
+  uiapi {
+    query {
+      User(first: 1, where: { Id: { eq: $userId } }) {
+        edges {
+          node {
+            ContactId @optional {
+              value
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}

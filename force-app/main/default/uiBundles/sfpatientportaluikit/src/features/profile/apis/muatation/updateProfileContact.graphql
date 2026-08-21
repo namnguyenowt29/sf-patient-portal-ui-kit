@@ -1,0 +1,72 @@
+mutation UpdateProfileContact($id: IdOrRef!, $contact: ContactUpdateRepresentation!) {
+  uiapi(input: { allOrNone: true }) {
+    ContactUpdate(input: { Id: $id, Contact: $contact }) {
+      Record {
+        Id @optional
+        Salutation @optional {
+          value
+        }
+        FirstName @optional {
+          value
+        }
+        LastName @optional {
+          value
+        }
+        Birthdate @optional {
+          value
+        }
+        Place_Of_Birth__c @optional {
+          value
+        }
+        Nationality__c @optional {
+          value
+        }
+        GenderIdentity @optional {
+          value
+        }
+        Marital_Status__c @optional {
+          value
+        }
+        Phone @optional {
+          value
+        }
+        MailingStreet @optional {
+          value
+        }
+        MailingState @optional {
+          value
+        }
+        MailingCity @optional {
+          value
+        }
+        Urgent_Contact_Relationship__c @optional {
+          value
+        }
+        OtherPhone @optional {
+          value
+        }
+        Title @optional {
+          value
+        }
+        Employer__c @optional {
+          value
+        }
+        MailingPostalCode @optional {
+          value
+        }
+        AVS_Number__c @optional {
+          value
+        }
+        Insurance_Provider__c @optional {
+          value
+        }
+        Card_Number__c @optional {
+          value
+        }
+        Supplementary_Insurance__c @optional {
+          value
+        }
+      }
+    }
+  }
+}

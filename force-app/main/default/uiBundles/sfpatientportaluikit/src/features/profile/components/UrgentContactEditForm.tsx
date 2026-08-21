@@ -1,25 +1,40 @@
-import { Button, FieldGroup } from "@/components/ui";
+import { createFieldMap } from "@tanstack/react-form";
+import { useState } from "react";
+import { Button } from "@/components/ui";
 import { useAppForm } from "@/hooks/form";
-import { z } from "zod";
+import {
+  urgentContactDefaultValues,
+  UrgentContactFormFields,
+  urgentContactFormSchema,
+  type UrgentContactFormValues,
+} from "@/components/forms";
 
-const urgentContactFormSchema = z.object({
-  relationship: z.string(),
-  telephone: z.string(),
-});
-
-export type UrgentContactFormSchema = z.infer<typeof urgentContactFormSchema>;
+const urgentContactFields = createFieldMap(urgentContactDefaultValues);
 
 type UrgentContactEditFormProps = Readonly<{
-  defaultValues: UrgentContactFormSchema;
+  defaultValues: UrgentContactFormValues;
   onCancel: () => void;
-  onSave: (value: UrgentContactFormSchema) => void;
+  onSave: (value: UrgentContactFormValues) => Promise<void>;
 }>;
 
 export function UrgentContactEditForm({ defaultValues, onCancel, onSave }: UrgentContactEditFormProps) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const form = useAppForm({
     defaultValues,
     validators: { onChange: urgentContactFormSchema, onSubmit: urgentContactFormSchema },
-    onSubmit: ({ value }) => onSave(value),
+    onSubmit: async ({ value }) => {
+      setIsSaving(true);
+      setSaveError(null);
+
+      try {
+        await onSave(value);
+      } catch (error) {
+        setSaveError(error instanceof Error ? error.message : "Unable to save urgent contact. Please try again.");
+      } finally {
+        setIsSaving(false);
+      }
+    },
   });
 
   return (
@@ -31,15 +46,19 @@ export function UrgentContactEditForm({ defaultValues, onCancel, onSave }: Urgen
           form.handleSubmit();
         }}
       >
-        <FieldGroup className="gap-5">
-          <form.AppField name="relationship">{(field) => <field.TextField label="Relationship" />}</form.AppField>
-          <form.AppField name="telephone">{(field) => <field.TextField label="Telephone" />}</form.AppField>
-        </FieldGroup>
+        <UrgentContactFormFields form={form} fields={urgentContactFields} />
+        {saveError && (
+          <p className="text-destructive text-sm" role="alert">
+            {saveError}
+          </p>
+        )}
         <div className="flex justify-end gap-3 pt-1">
-          <Button variant="ghost" onClick={onCancel}>
+          <Button type="button" variant="ghost" onClick={onCancel} disabled={isSaving}>
             Cancel
           </Button>
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={isSaving}>
+            {isSaving ? "Saving..." : "Save"}
+          </Button>
         </div>
       </form>
     </form.AppForm>

@@ -1,4 +1,5 @@
 import { createFieldMap } from "@tanstack/react-form";
+import { useState } from "react";
 import { Button } from "@/components/ui";
 import {
   employerDefaultValues,
@@ -13,14 +14,27 @@ const employerFields = createFieldMap(employerDefaultValues);
 type EmployerEditFormProps = Readonly<{
   defaultValues: EmployerFormValues;
   onCancel: () => void;
-  onSave: (values: EmployerFormValues) => void;
+  onSave: (values: EmployerFormValues) => Promise<void>;
 }>;
 
 export function EmployerEditForm({ defaultValues, onCancel, onSave }: EmployerEditFormProps) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const form = useAppForm({
     defaultValues,
     validators: { onChange: employerFormSchema, onSubmit: employerFormSchema },
-    onSubmit: ({ value }) => onSave(value),
+    onSubmit: async ({ value }) => {
+      setIsSaving(true);
+      setSaveError(null);
+
+      try {
+        await onSave(value);
+      } catch (error) {
+        setSaveError(error instanceof Error ? error.message : "Unable to save employer details. Please try again.");
+      } finally {
+        setIsSaving(false);
+      }
+    },
   });
 
   return (
@@ -33,11 +47,12 @@ export function EmployerEditForm({ defaultValues, onCancel, onSave }: EmployerEd
         }}
       >
         <EmployerFormFields form={form} fields={employerFields} />
+        {saveError && <p className="text-destructive text-sm" role="alert">{saveError}</p>}
         <div className="flex justify-end gap-3 pt-1">
-          <Button type="button" variant="ghost" onClick={onCancel}>
+          <Button type="button" variant="ghost" onClick={onCancel} disabled={isSaving}>
             Cancel
           </Button>
-          <Button type="submit">Save</Button>
+          <Button type="submit" disabled={isSaving}>{isSaving ? "Saving..." : "Save"}</Button>
         </div>
       </form>
     </form.AppForm>

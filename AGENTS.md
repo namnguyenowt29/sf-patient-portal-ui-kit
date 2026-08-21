@@ -2,6 +2,10 @@
 
 This project is a **Salesforce DX (SFDX) project** containing a **React UI Bundle**. The UI Bundle is a standalone Vite + React SPA that runs inside the Salesforce platform. Use this file when working in this project.
 
+## Package manager
+
+The project declares `pnpm@11.18.0`. Use `pnpm` for every root and UI Bundle dependency, script, build, lint, test, schema, and code-generation command. Where older examples in this guide still show `npm`, use the equivalent `pnpm` command instead.
+
 ## Resolving paths
 
 Read `sfdx-project.json` at the project root. Take the first `packageDirectories[].path` value and append `/main/default` to get `<sfdx-source>`. The UI Bundle directory is:

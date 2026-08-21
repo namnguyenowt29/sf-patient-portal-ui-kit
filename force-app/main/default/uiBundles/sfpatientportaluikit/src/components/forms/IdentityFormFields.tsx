@@ -1,46 +1,50 @@
 import { withFieldGroup } from "@/hooks/form";
-import { FieldGroup, RadioField, SelectField } from "../ui";
+import { format, isValid, parseISO } from "date-fns";
+import { Field, FieldError, FieldGroup, FieldLabel, RadioField, SelectField } from "../ui";
+import { DatePicker, DatePickerCalendar, DatePickerContent, DatePickerTrigger } from "../ui/date-picker";
 import { z } from "zod";
 import { TOption } from "@/types/common";
 
 export const identityFormSchema = z.object({
-  salutation: z.enum(["mr", "ms", "unspecified"]),
-  firstName: z.string().trim().min(1, "First name is required"),
-  lastName: z.string().trim().min(1, "Last name is required"),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
-  placeOfBirth: z.string().min(1, "Place of birth is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  gender: z.enum(["male", "female", "other"]),
-  maritalStatus: z.string().min(1, "Marital status is required"),
+  salutation: z.enum(["Mr.", "Ms.", "Mx."]),
+  firstName: z.string().trim().min(1, "First name is required").nullable(),
+  lastName: z.string().trim().min(1, "Last name is required").nullable(),
+  dateOfBirth: z.string().min(1, "Date of birth is required").nullable(),
+  placeOfBirth: z.string().min(1, "Place of birth is required").nullable(),
+  nationality: z.string().min(1, "Nationality is required").nullable(),
+  gender: z.enum(["Male", "Female", "Not Listed", "Nonbinary"]).nullable(),
+  maritalStatus: z.string().min(1, "Marital status is required").nullable(),
 });
 
 export const identityDefaultValues: IdentityFormValues = {
-  salutation: "unspecified",
+  salutation: "Mx.",
   firstName: "",
   lastName: "",
   dateOfBirth: "",
   placeOfBirth: "",
   nationality: "",
-  gender: "other",
+  gender: "Not Listed",
   maritalStatus: "",
 };
 
 const salutationOptions: TOption[] = [
-  { label: "Mr.", value: "mr" },
-  { label: "Ms.", value: "ms" },
-  { label: "Not specified", value: "unspecified" },
+  { label: "Mr.", value: "Mr." },
+  { label: "Ms.", value: "Ms." },
+  { label: "Mx.", value: "Mx." },
 ];
 
 const genderOptions: TOption[] = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
-  { label: "Other", value: "other" },
+  { label: "Male", value: "Male" },
+  { label: "Female", value: "Female" },
+  { label: "Not Listed", value: "Not Listed" },
+  { label: "Not Nonbinary", value: "Not Nonbinary" },
 ];
 
 const placeOfBirthOptions: TOption[] = [
   { label: "Geneva", value: "Geneva" },
   { label: "Lausanne", value: "Lausanne" },
   { label: "Zurich", value: "Zurich" },
+  { label: "Vietnam", value: "Vietnam" },
 ];
 
 export type IdentityFormValues = z.infer<typeof identityFormSchema>;
@@ -71,16 +75,46 @@ export const IdentityFormFields = withFieldGroup({
         <group.AppField name="lastName">
           {(field) => <field.TextField label="Last name" autoComplete="family-name" />}
         </group.AppField>
-        <group.AppField name="dateOfBirth">
-          {(field) => <field.TextField label="Date of birth" type="date" autoComplete="bday" />}
-        </group.AppField>
+        <group.Field name="dateOfBirth">
+          {(field) => {
+            const parsedDate = field.state.value ? parseISO(field.state.value) : undefined;
+            const selectedDate = parsedDate && isValid(parsedDate) ? parsedDate : undefined;
+            const isInvalid = field.state.meta.isBlurred && field.state.meta.errors.length > 0;
+            const fieldId = `${field.name}-date-picker`;
+
+            return (
+              <Field data-invalid={isInvalid}>
+                <FieldLabel htmlFor={fieldId}>Date of birth</FieldLabel>
+                <DatePicker>
+                  <DatePickerTrigger
+                    id={fieldId}
+                    date={selectedDate}
+                    placeholder="Select your date of birth"
+                    dateFormat="PPP"
+                    className="w-full"
+                    onBlur={field.handleBlur}
+                  />
+                  <DatePickerContent align="start">
+                    <DatePickerCalendar
+                      mode="single"
+                      captionLayout="dropdown"
+                      selected={selectedDate}
+                      onSelect={(date) => field.handleChange(date ? format(date, "yyyy-MM-dd") : "")}
+                    />
+                  </DatePickerContent>
+                </DatePicker>
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
+              </Field>
+            );
+          }}
+        </group.Field>
 
         <group.Field name="placeOfBirth">
           {(field) => (
             <SelectField
               label="Place of birth"
               options={placeOfBirthOptions}
-              value={field.state.value}
+              value={field.state.value ?? ""}
               onChange={field.handleChange}
             />
           )}
@@ -94,8 +128,9 @@ export const IdentityFormFields = withFieldGroup({
                 { label: "Swiss", value: "Swiss" },
                 { label: "French", value: "French" },
                 { label: "Italian", value: "Italian" },
+                { label: "Vietnam", value: "Vietnam" },
               ]}
-              value={field.state.value}
+              value={field.state.value ?? ""}
               onChange={field.handleChange}
             />
           )}
@@ -107,7 +142,7 @@ export const IdentityFormFields = withFieldGroup({
               label="Gender"
               name={field.name}
               options={genderOptions}
-              value={field.state.value}
+              value={field.state.value ?? ""}
               onValueChange={(value) => field.handleChange(value as IdentityFormValues["gender"])}
             />
           )}
@@ -123,7 +158,7 @@ export const IdentityFormFields = withFieldGroup({
                 { label: "Divorced", value: "Divorced" },
                 { label: "Widowed", value: "Widowed" },
               ]}
-              value={field.state.value}
+              value={field.state.value ?? ""}
               onChange={field.handleChange}
             />
           )}

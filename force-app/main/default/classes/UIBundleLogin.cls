@@ -1,22 +1,5 @@
-/**
- * REST endpoint for Web Applications user login.
- *
- * Endpoint: POST /services/apexrest/auth/login
- *
- * Authenticates a user and returns a redirect URL for session creation.
- *
- * @see https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref/apex_classes_sites.htm#apex_System_Site_login
- */
 @RestResource(urlMapping='/auth/login')
 global with sharing class UIBundleLogin {
-
-    /**
-     * Authenticates a user and returns a redirect URL.
-     * @param email User's email address (used as username).
-     * @param password User's password.
-     * @param startUrl Optional URL to redirect to after login.
-     * @return LoginResponse with redirectUrl on success, or error message on failure.
-     */
     @HttpPost
     global static LoginResponse doLogin(String email, String password, String startUrl) {
         try {
