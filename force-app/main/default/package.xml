@@ -21,6 +21,23 @@
         <name>DigitalExperienceConfig</name>
     </types>
     <types>
+        <members>Appointment__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Appointment__c.Appointment_Type__c</members>
+        <members>Appointment__c.Cancelled_At__c</members>
+        <members>Appointment__c.Cancellation_Reason__c</members>
+        <members>Appointment__c.Contact__c</members>
+        <members>Appointment__c.End_Date_Time__c</members>
+        <members>Appointment__c.Internal_Notes__c</members>
+        <members>Appointment__c.Location__c</members>
+        <members>Appointment__c.Patient_Notes__c</members>
+        <members>Appointment__c.Start_Date_Time__c</members>
+        <members>Appointment__c.Status__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
         <members>sfpatientportaluikit</members>
         <name>Network</name>
     </types>

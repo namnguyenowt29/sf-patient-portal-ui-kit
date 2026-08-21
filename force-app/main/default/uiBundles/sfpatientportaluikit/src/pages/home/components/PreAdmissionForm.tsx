@@ -15,6 +15,9 @@ import {
   insuranceDefaultValues,
   insuranceFormSchema,
   InsuranceFormFields,
+  urgentContactDefaultValues,
+  urgentContactFormSchema,
+  UrgentContactFormFields,
 } from "@/components/forms";
 import { StatusAlert } from "@/components/alerts/status-alert";
 import { Button, Stepper, StepperItem } from "@/components/ui";
@@ -23,6 +26,7 @@ import { useAppForm } from "@/hooks/form";
 const preAdmissionDefaultValues = {
   ...identityDefaultValues,
   ...contactDetailDefaultValues,
+  ...urgentContactDefaultValues,
   ...employerDefaultValues,
   ...insuranceDefaultValues,
 };
@@ -30,8 +34,14 @@ const preAdmissionDefaultValues = {
 const preAdmissionFormSchema = z.object({
   ...identityFormSchema.shape,
   ...contactDetailFormSchema.shape,
+  ...urgentContactFormSchema.shape,
   ...employerFormSchema.shape,
   ...insuranceFormSchema.shape,
+});
+
+const contactDetailsStepFormSchema = z.object({
+  ...contactDetailFormSchema.shape,
+  ...urgentContactFormSchema.shape,
 });
 
 const preAdmissionFields = createFieldMap(preAdmissionDefaultValues);
@@ -57,8 +67,15 @@ const steps = [
     number: 2,
     label: "Contact details",
     title: "Your contact details",
-    schema: contactDetailFormSchema,
-    fieldNames: ["telephone", "mailingStreet", "mailingCity", "mailingState"],
+    schema: contactDetailsStepFormSchema,
+    fieldNames: [
+      "telephone",
+      "mailingStreet",
+      "mailingCity",
+      "mailingState",
+      "relationship",
+      "urgentContactTelephone",
+    ],
   },
   {
     number: 3,
@@ -232,7 +249,12 @@ export function PreAdmissionForm({
             )}
 
             {currentStep === 1 && <IdentityFormFields form={form} fields={preAdmissionFields} />}
-            {currentStep === 2 && <ContactDetailFormFields form={form} fields={preAdmissionFields} />}
+            {currentStep === 2 && (
+              <>
+                <ContactDetailFormFields form={form} fields={preAdmissionFields} />
+                <UrgentContactFormFields form={form} fields={preAdmissionFields} />
+              </>
+            )}
             {currentStep === 3 && <EmployerFormFields form={form} fields={preAdmissionFields} />}
             {currentStep === 4 && <InsuranceFormFields form={form} fields={preAdmissionFields} />}
           </div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Internal_Notes__c</fullName>
+    <label>Internal Notes</label>
+    <description>Stores private clinical or operational notes for authorized internal staff.</description>
+    <inlineHelpText>Enter staff-only notes; this field is not exposed to portal users.</inlineHelpText>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

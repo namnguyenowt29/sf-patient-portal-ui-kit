@@ -1086,6 +1086,52 @@ export type AppointmentTopicTimeSlot_Filter = {
   or?: InputMaybe<Array<InputMaybe<AppointmentTopicTimeSlot_Filter>>>;
 };
 
+export type Appointment__History_Filter = {
+  CreatedBy?: InputMaybe<User_Filter>;
+  CreatedById?: InputMaybe<IdOperators>;
+  CreatedDate?: InputMaybe<DateTimeOperators>;
+  DataType?: InputMaybe<PicklistOperators>;
+  Field?: InputMaybe<PicklistOperators>;
+  Id?: InputMaybe<IdOperators>;
+  IsDeleted?: InputMaybe<BooleanOperators>;
+  NewvalNumber?: InputMaybe<DoubleOperators>;
+  NewvalString?: InputMaybe<StringOperators>;
+  OldvalNumber?: InputMaybe<DoubleOperators>;
+  OldvalString?: InputMaybe<StringOperators>;
+  Parent?: InputMaybe<Appointment__C_Filter>;
+  ParentId?: InputMaybe<IdOperators>;
+  and?: InputMaybe<Array<InputMaybe<Appointment__History_Filter>>>;
+  not?: InputMaybe<Appointment__History_Filter>;
+  or?: InputMaybe<Array<InputMaybe<Appointment__History_Filter>>>;
+};
+
+export type Appointment__C_Filter = {
+  Contact__c?: InputMaybe<IdOperators>;
+  Contact__r?: InputMaybe<Contact_Filter>;
+  CreatedBy?: InputMaybe<User_Filter>;
+  CreatedById?: InputMaybe<IdOperators>;
+  CreatedDate?: InputMaybe<DateTimeOperators>;
+  Id?: InputMaybe<IdOperators>;
+  IsDeleted?: InputMaybe<BooleanOperators>;
+  LastActivityDate?: InputMaybe<DateOperators>;
+  LastModifiedBy?: InputMaybe<User_Filter>;
+  LastModifiedById?: InputMaybe<IdOperators>;
+  LastModifiedDate?: InputMaybe<DateTimeOperators>;
+  Name?: InputMaybe<StringOperators>;
+  Owner?: InputMaybe<Appointment__C_Owner_Filters>;
+  OwnerId?: InputMaybe<IdOperators>;
+  SystemModstamp?: InputMaybe<DateTimeOperators>;
+  and?: InputMaybe<Array<InputMaybe<Appointment__C_Filter>>>;
+  not?: InputMaybe<Appointment__C_Filter>;
+  or?: InputMaybe<Array<InputMaybe<Appointment__C_Filter>>>;
+};
+
+export type Appointment__C_Owner_Filters = {
+  Group?: InputMaybe<Group_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+  User?: InputMaybe<User_Filter>;
+};
+
 export type ApprovalSubmissionDetailHistory_Filter = {
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalSubmissionDetailId?: InputMaybe<IdOperators>;
@@ -1200,6 +1246,7 @@ export type ApprovalSubmission_RelatedRecord_Filters = {
   AnalyticsUserAttrFuncTkn?: InputMaybe<AnalyticsUserAttrFuncTkn_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentInvitee?: InputMaybe<AppointmentInvitee_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -1492,6 +1539,7 @@ export type ApprovalWorkItem_RelatedRecord_Filters = {
   AnalyticsUserAttrFuncTkn?: InputMaybe<AnalyticsUserAttrFuncTkn_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentInvitee?: InputMaybe<AppointmentInvitee_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -2102,6 +2150,7 @@ export type Attachment_Parent_Filters = {
   Account?: InputMaybe<Account_Filter>;
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -4258,6 +4307,7 @@ export type ContactRequest_Owner_Filters = {
 
 export type ContactRequest_What_Filters = {
   Account?: InputMaybe<Account_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Case?: InputMaybe<Case_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Opportunity?: InputMaybe<Opportunity_Filter>;
@@ -4552,6 +4602,7 @@ export type ContentDocumentLink_LinkedEntity_Filters = {
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentTopicTimeSlot?: InputMaybe<AppointmentTopicTimeSlot_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -4961,6 +5012,7 @@ export type ContentVersion_FirstPublishLocation_Filters = {
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentTopicTimeSlot?: InputMaybe<AppointmentTopicTimeSlot_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -7761,6 +7813,7 @@ export type DuplicateRecordItem_Filter = {
 export type DuplicateRecordItem_Record_Filters = {
   Account?: InputMaybe<Account_Filter>;
   Address?: InputMaybe<Address_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Case?: InputMaybe<Case_Filter>;
   Contact?: InputMaybe<Contact_Filter>;
   Individual?: InputMaybe<Individual_Filter>;
@@ -7871,6 +7924,7 @@ export type EmailMessage_RelatedTo_Filters = {
   Account?: InputMaybe<Account_Filter>;
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -8422,6 +8476,7 @@ export type Event_What_Filters = {
   Account?: InputMaybe<Account_Filter>;
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -8695,6 +8750,7 @@ export type FeedItem_Parent_Filters = {
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentTopicTimeSlot?: InputMaybe<AppointmentTopicTimeSlot_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -8899,7 +8955,7 @@ export type FinanceBalanceSnapshot_Filter = {
   LastModifiedDate?: InputMaybe<DateTimeOperators>;
   LastReferencedDate?: InputMaybe<DateTimeOperators>;
   LastViewedDate?: InputMaybe<DateTimeOperators>;
-  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  LegalEntity?: InputMaybe<FinanceBalanceSnapshot_LegalEntity_Filters>;
   LegalEntityId?: InputMaybe<IdOperators>;
   OriginalEventType?: InputMaybe<StringOperators>;
   OriginalReferenceEntityType?: InputMaybe<StringOperators>;
@@ -8918,6 +8974,12 @@ export type FinanceBalanceSnapshot_Filter = {
   or?: InputMaybe<Array<InputMaybe<FinanceBalanceSnapshot_Filter>>>;
 };
 
+export type FinanceBalanceSnapshot_LegalEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
+  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+};
+
 export type FinanceBalanceSnapshot_Owner_Filters = {
   Group?: InputMaybe<Group_Filter>;
   Name?: InputMaybe<Name_Filter>;
@@ -8925,6 +8987,7 @@ export type FinanceBalanceSnapshot_Owner_Filters = {
 };
 
 export type FinanceBalanceSnapshot_ReferenceEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   CreditMemoInvApplication?: InputMaybe<CreditMemoInvApplication_Filter>;
   CreditMemoLine?: InputMaybe<CreditMemoLine_Filter>;
@@ -8937,6 +9000,7 @@ export type FinanceBalanceSnapshot_ReferenceEntity_Filters = {
 };
 
 export type FinanceTransaction_DestinationEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   CreditMemoInvApplication?: InputMaybe<CreditMemoInvApplication_Filter>;
   CreditMemoLine?: InputMaybe<CreditMemoLine_Filter>;
@@ -8981,7 +9045,7 @@ export type FinanceTransaction_Filter = {
   LastModifiedDate?: InputMaybe<DateTimeOperators>;
   LastReferencedDate?: InputMaybe<DateTimeOperators>;
   LastViewedDate?: InputMaybe<DateTimeOperators>;
-  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  LegalEntity?: InputMaybe<FinanceTransaction_LegalEntity_Filters>;
   LegalEntityId?: InputMaybe<IdOperators>;
   OriginalCreditGlAccountName?: InputMaybe<StringOperators>;
   OriginalCreditGlAccountNumber?: InputMaybe<StringOperators>;
@@ -9017,6 +9081,12 @@ export type FinanceTransaction_Filter = {
   or?: InputMaybe<Array<InputMaybe<FinanceTransaction_Filter>>>;
 };
 
+export type FinanceTransaction_LegalEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
+  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+};
+
 export type FinanceTransaction_Owner_Filters = {
   Group?: InputMaybe<Group_Filter>;
   Name?: InputMaybe<Name_Filter>;
@@ -9024,6 +9094,7 @@ export type FinanceTransaction_Owner_Filters = {
 };
 
 export type FinanceTransaction_ParentReferenceEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   CreditMemoInvApplication?: InputMaybe<CreditMemoInvApplication_Filter>;
   CreditMemoLine?: InputMaybe<CreditMemoLine_Filter>;
@@ -9036,6 +9107,7 @@ export type FinanceTransaction_ParentReferenceEntity_Filters = {
 };
 
 export type FinanceTransaction_ReferenceEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   CreditMemoInvApplication?: InputMaybe<CreditMemoInvApplication_Filter>;
   CreditMemoLine?: InputMaybe<CreditMemoLine_Filter>;
@@ -9048,6 +9120,7 @@ export type FinanceTransaction_ReferenceEntity_Filters = {
 };
 
 export type FinanceTransaction_SourceEntity_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   CreditMemoInvApplication?: InputMaybe<CreditMemoInvApplication_Filter>;
   CreditMemoLine?: InputMaybe<CreditMemoLine_Filter>;
@@ -9340,6 +9413,7 @@ export type FlowOrchestrationWorkItem_RelatedRecord_Filters = {
   AnalyticsUserAttrFuncTkn?: InputMaybe<AnalyticsUserAttrFuncTkn_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentInvitee?: InputMaybe<AppointmentInvitee_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -10605,6 +10679,7 @@ export type InventoryItemReservation_Filter = {
 };
 
 export type InventoryItemReservation_ItemReservationSource_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CartItem?: InputMaybe<CartItem_Filter>;
   FulfillmentOrderLineItem?: InputMaybe<FulfillmentOrderLineItem_Filter>;
   Name?: InputMaybe<Name_Filter>;
@@ -10655,6 +10730,7 @@ export type InventoryReservation_Owner_Filters = {
 };
 
 export type InventoryReservation_ReservationSource_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   FulfillmentOrder?: InputMaybe<FulfillmentOrder_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Order?: InputMaybe<Order_Filter>;
@@ -10859,6 +10935,8 @@ export type JoinInput = {
   AppointmentInvitee?: InputMaybe<AppointmentInvitee_Filter>;
   AppointmentTopicTimeSlot?: InputMaybe<AppointmentTopicTimeSlot_Filter>;
   AppointmentTopicTimeSlotHistory?: InputMaybe<AppointmentTopicTimeSlotHistory_Filter>;
+  Appointment__History?: InputMaybe<Appointment__History_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalSubmissionDetailHistory?: InputMaybe<ApprovalSubmissionDetailHistory_Filter>;
@@ -13121,6 +13199,7 @@ export type Note_Parent_Filters = {
   Account?: InputMaybe<Account_Filter>;
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -13282,6 +13361,7 @@ export type ObjectRelatedUrl_Filter = {
 
 export type ObjectRelatedUrl_Parent_Filters = {
   Account?: InputMaybe<Account_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Contact?: InputMaybe<Contact_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Product2?: InputMaybe<Product2_Filter>;
@@ -16395,6 +16475,7 @@ export type ProcessDefinition_Filter = {
 };
 
 export type ProcessException_AttachedTo_Filters = {
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   CreditMemo?: InputMaybe<CreditMemo_Filter>;
   FulfillmentOrder?: InputMaybe<FulfillmentOrder_Filter>;
   Invoice?: InputMaybe<Invoice_Filter>;
@@ -16490,6 +16571,7 @@ export type ProcessInstance_TargetObject_Filters = {
   AnalyticsUserAttrFuncTkn?: InputMaybe<AnalyticsUserAttrFuncTkn_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
   AppointmentInvitee?: InputMaybe<AppointmentInvitee_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -18732,6 +18814,7 @@ export type RecordAction_Filter = {
 export type RecordAction_Record_Filters = {
   Account?: InputMaybe<Account_Filter>;
   Address?: InputMaybe<Address_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Asset?: InputMaybe<Asset_Filter>;
   AssetRelationship?: InputMaybe<AssetRelationship_Filter>;
   AssignedResource?: InputMaybe<AssignedResource_Filter>;
@@ -21045,6 +21128,7 @@ export type Task_What_Filters = {
   Account?: InputMaybe<Account_Filter>;
   AppointmentCategory?: InputMaybe<AppointmentCategory_Filter>;
   AppointmentInvitation?: InputMaybe<AppointmentInvitation_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   ApprovalSubmission?: InputMaybe<ApprovalSubmission_Filter>;
   ApprovalSubmissionDetail?: InputMaybe<ApprovalSubmissionDetail_Filter>;
   ApprovalWorkItem?: InputMaybe<ApprovalWorkItem_Filter>;
@@ -21267,6 +21351,7 @@ export type TimeSlot_Filter = {
 
 export type TopicAssignment_Entity_Filters = {
   Account?: InputMaybe<Account_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Asset?: InputMaybe<Asset_Filter>;
   Campaign?: InputMaybe<Campaign_Filter>;
   Case?: InputMaybe<Case_Filter>;
@@ -21505,6 +21590,7 @@ export type UserDefinedLabelAssignment_Filter = {
 
 export type UserDefinedLabelAssignment_Item_Filters = {
   Account?: InputMaybe<Account_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Campaign?: InputMaybe<Campaign_Filter>;
   Case?: InputMaybe<Case_Filter>;
   Contact?: InputMaybe<Contact_Filter>;
@@ -22213,6 +22299,7 @@ export type VoiceCall_Owner_Filters = {
 
 export type VoiceCall_RelatedRecord_Filters = {
   Account?: InputMaybe<Account_Filter>;
+  Appointment__c?: InputMaybe<Appointment__C_Filter>;
   Case?: InputMaybe<Case_Filter>;
   Contact?: InputMaybe<Contact_Filter>;
   ContactRequest?: InputMaybe<ContactRequest_Filter>;

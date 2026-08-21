@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date_Time__c</fullName>
+    <label>End Date Time</label>
+    <description>Stores when the appointment ends so its duration and schedule can be managed.</description>
+    <inlineHelpText>Enter an end date and time later than the appointment start.</inlineHelpText>
+    <type>DateTime</type>
+</CustomField>

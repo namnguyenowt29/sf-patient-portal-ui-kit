@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Notes__c</fullName>
+    <label>Patient Notes</label>
+    <description>Stores appointment details or questions that are intended for the patient portal.</description>
+    <inlineHelpText>Enter notes that are appropriate for the patient to read in the portal.</inlineHelpText>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

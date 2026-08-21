@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cancelled_At__c</fullName>
+    <label>Cancelled At</label>
+    <description>Records when the appointment was cancelled for audit and scheduling history.</description>
+    <inlineHelpText>Enter the date and time when the appointment was cancelled.</inlineHelpText>
+    <type>DateTime</type>
+</CustomField>
