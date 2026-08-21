@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact__c</fullName>
+    <label>Contact</label>
+    <description>Links the pre-admission snapshot to the patient Contact who submitted it.</description>
+    <inlineHelpText>Select the patient Contact associated with this pre-admission record.</inlineHelpText>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Pre-Admissions</relationshipLabel>
+    <relationshipName>PreAdmissions</relationshipName>
+    <required>true</required>
+    <type>Lookup</type>
+</CustomField>

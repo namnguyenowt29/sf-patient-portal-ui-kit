@@ -132,7 +132,8 @@ global without sharing class UIBundleRegistration {
     private static String createUser(User u, String password) {
         String userId;
         try {
-            userId = Site.createExternalUser(u, null, password);
+            Id demoAccountId = '001gK00001ItJ8qQAF';
+            userId = Site.createExternalUser(u, demoAccountId, password);
         } catch (Site.ExternalUserCreateException ex) {
             throw new UIBundleAuthUtils.AuthException(500, ex.getDisplayMessages());
         }

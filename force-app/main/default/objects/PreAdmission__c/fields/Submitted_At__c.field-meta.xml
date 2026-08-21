@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submitted_At__c</fullName>
+    <label>Submitted At</label>
+    <description>Records when the completed pre-admission submission was submitted.</description>
+    <inlineHelpText>Enter the date and time when the final submission succeeds.</inlineHelpText>
+    <type>DateTime</type>
+</CustomField>

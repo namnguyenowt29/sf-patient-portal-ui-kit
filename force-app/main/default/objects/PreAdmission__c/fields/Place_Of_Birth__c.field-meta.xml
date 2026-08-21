@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Place_Of_Birth__c</fullName>
+    <label>Place Of Birth</label>
+    <description>Preserves the place of birth provided in the pre-admission identity snapshot.</description>
+    <inlineHelpText>Enter the patient's place of birth.</inlineHelpText>
+    <length>255</length>
+    <type>Text</type>
+</CustomField>

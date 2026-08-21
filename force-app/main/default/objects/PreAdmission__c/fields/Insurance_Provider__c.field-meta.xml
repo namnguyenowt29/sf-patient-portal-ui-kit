@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Provider__c</fullName>
+    <label>Insurance Provider</label>
+    <description>Preserves the insurance provider named in the pre-admission insurance snapshot.</description>
+    <inlineHelpText>Enter the patient's insurance provider.</inlineHelpText>
+    <length>255</length>
+    <type>Text</type>
+</CustomField>

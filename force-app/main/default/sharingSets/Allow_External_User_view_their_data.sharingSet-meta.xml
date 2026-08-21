@@ -6,6 +6,18 @@
         <objectField>Id</objectField>
         <userField>Contact.Account</userField>
     </accessMappings>
+    <accessMappings>
+        <accessLevel>Edit</accessLevel>
+        <object>PreAdmission__c</object>
+        <objectField>Contact__c</objectField>
+        <userField>Contact</userField>
+    </accessMappings>
+    <accessMappings>
+        <accessLevel>Edit</accessLevel>
+        <object>ServiceAppointment</object>
+        <objectField>Contact</objectField>
+        <userField>Contact</userField>
+    </accessMappings>
     <name>Allow External User view their data</name>
     <profiles>owt customer login user</profiles>
 </SharingSet>

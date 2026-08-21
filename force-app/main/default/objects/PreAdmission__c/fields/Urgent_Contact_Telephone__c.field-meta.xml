@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Urgent_Contact_Telephone__c</fullName>
+    <label>Urgent Contact Telephone</label>
+    <description>Preserves the urgent contact telephone number from the pre-admission form.</description>
+    <inlineHelpText>Enter the urgent contact's telephone number.</inlineHelpText>
+    <type>Phone</type>
+</CustomField>

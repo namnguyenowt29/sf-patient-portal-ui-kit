@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Urgent_Contact_Relationship__c</fullName>
+    <label>Urgent Contact Relationship</label>
+    <description>Preserves the relationship to the urgent contact supplied during pre-admission.</description>
+    <inlineHelpText>Enter the urgent contact's relationship to the patient.</inlineHelpText>
+    <length>80</length>
+    <type>Text</type>
+</CustomField>

@@ -21,6 +21,39 @@
         <name>DigitalExperienceConfig</name>
     </types>
     <types>
+        <members>PreAdmission__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>PreAdmission__c.AVS_Number__c</members>
+        <members>PreAdmission__c.Card_Number__c</members>
+        <members>PreAdmission__c.Contact__c</members>
+        <members>PreAdmission__c.Date_Of_Birth__c</members>
+        <members>PreAdmission__c.Employer_City__c</members>
+        <members>PreAdmission__c.Employer_Postal_Code__c</members>
+        <members>PreAdmission__c.Employer__c</members>
+        <members>PreAdmission__c.First_Name__c</members>
+        <members>PreAdmission__c.Form_Version__c</members>
+        <members>PreAdmission__c.Gender__c</members>
+        <members>PreAdmission__c.Insurance_Provider__c</members>
+        <members>PreAdmission__c.Last_Name__c</members>
+        <members>PreAdmission__c.Mailing_City__c</members>
+        <members>PreAdmission__c.Mailing_State__c</members>
+        <members>PreAdmission__c.Mailing_Street__c</members>
+        <members>PreAdmission__c.Marital_Status__c</members>
+        <members>PreAdmission__c.Nationality__c</members>
+        <members>PreAdmission__c.Place_Of_Birth__c</members>
+        <members>PreAdmission__c.Profession__c</members>
+        <members>PreAdmission__c.Salutation__c</members>
+        <members>PreAdmission__c.Status__c</members>
+        <members>PreAdmission__c.Submitted_At__c</members>
+        <members>PreAdmission__c.Supplementary_Insurance__c</members>
+        <members>PreAdmission__c.Telephone__c</members>
+        <members>PreAdmission__c.Urgent_Contact_Relationship__c</members>
+        <members>PreAdmission__c.Urgent_Contact_Telephone__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
         <members>sfpatientportaluikit</members>
         <name>Network</name>
     </types>

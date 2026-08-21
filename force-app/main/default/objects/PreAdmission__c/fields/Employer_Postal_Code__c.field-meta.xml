@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employer_Postal_Code__c</fullName>
+    <label>Employer Postal Code</label>
+    <description>Preserves the employer postal code in the pre-admission snapshot without numeric conversion.</description>
+    <inlineHelpText>Enter the employer postal code, preserving leading zeroes and non-numeric characters.</inlineHelpText>
+    <length>20</length>
+    <type>Text</type>
+</CustomField>

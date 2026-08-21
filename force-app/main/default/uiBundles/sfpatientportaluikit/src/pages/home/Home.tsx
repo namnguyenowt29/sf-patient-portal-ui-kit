@@ -1,75 +1,50 @@
-import { useState } from "react";
-// import { useNavigate } from "react-router";
-
-// import { SearchBar } from "../../features/object-search/components/SearchBar";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  Button,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-} from "@/components/ui";
-import { PreAdmissionForm, type CurrentStep } from "./components/PreAdmissionForm";
-import { HomeAppointmentView, type Appointment } from "./components/HomeAppointmentView";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
-const upcomingAppointments: readonly Appointment[] = [
-  {
-    id: "upcoming-physiotherapy",
-    dateTime: "Today, 12:30",
-    serviceName: "Physiotherapy — rehabilitation session",
-    status: "complete-pre-admission",
-  },
-  {
-    id: "upcoming-cardiology",
-    dateTime: "24 May 2025, 08:30",
-    serviceName: "Cardiology — follow-up consultation",
-    status: "need-confirm",
-  },
-  {
-    id: "upcoming-radiology",
-    dateTime: "28 May 2025, 14:15",
-    serviceName: "Radiology — CT scan",
-    status: "complete-pre-admission",
-  },
-];
-
-const previousAppointments: readonly Appointment[] = [
-  {
-    id: "previous-radiology",
-    dateTime: "3 March 2025, 10:15",
-    serviceName: "Radiology — CT scan",
-    status: "completed",
-  },
-  {
-    id: "previous-general-practice",
-    dateTime: "18 February 2025, 09:00",
-    serviceName: "General practice — consultation",
-    status: "completed",
-  },
-  {
-    id: "previous-laboratory",
-    dateTime: "27 January 2025, 11:45",
-    serviceName: "Laboratory — blood test",
-    status: "completed",
-  },
-];
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui";
+import { appointmentsApi } from "@/features/appointments/apis/appointmentsApi";
+import type { AppointmentsByPeriod, CreateAppointmentInput } from "@/features/appointments/apis/appointmentsApi";
+import { useAsyncData } from "@/hooks/useAsyncData";
+import { useAuth } from "@/hooks/useAuth";
+import { toast, Toaster } from "@/components/ui/sonner";
+import { CreateAppointmentDialog } from "./components/CreateAppointmentDialog";
+import { PreAdmissionForm, type CurrentStep } from "./components/PreAdmissionForm";
+import { HomeAppointmentView } from "./components/HomeAppointmentView";
 
 export default function HomePage() {
-  // const navigate = useNavigate();
-  // const [text, setText] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<CurrentStep>(1);
   const [isPreAdmissionDirty, setIsPreAdmissionDirty] = useState(false);
   const [showDiscardWarning, setShowDiscardWarning] = useState(false);
+  const [isCreateAppointmentOpen, setIsCreateAppointmentOpen] = useState(false);
+  const [appointmentsRefreshKey, setAppointmentsRefreshKey] = useState(0);
+  const [appointments, setAppointments] = useState<AppointmentsByPeriod | null>(null);
+  const { user } = useAuth();
+  const { data: loadedAppointments } = useAsyncData(
+    () => appointmentsApi.getAppointmentsForUser(user?.id ?? ""),
+    [user?.id, appointmentsRefreshKey]
+  );
 
-  // const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const params = text ? `?q=${encodeURIComponent(text)}` : "";
-  //   navigate(`/accounts${params}`);
-  // };
+  useEffect(() => {
+    setAppointments(loadedAppointments);
+  }, [loadedAppointments]);
+
+  const handleCreateAppointment = async (appointment: CreateAppointmentInput) => {
+    const userId = user?.id ?? "";
+    await appointmentsApi.createAppointmentForUser(userId, appointment);
+    setAppointmentsRefreshKey((current) => current + 1);
+    toast.success("Appointment created", {
+      description: "Your appointment has been added to the list.",
+    });
+  };
 
   const handlePreAdmissionDirtyChange = (isDirty: boolean) => {
     setIsPreAdmissionDirty(isDirty);
@@ -100,22 +75,19 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-center justify-between gap-6">
-        {/* <h1 className="text-2xl font-bold">Account Search</h1>
-        <Button variant="outline" size="sm" onClick={() => navigate("/accounts")}>
-          Browse All Accounts
-        </Button> */}
         <div className="header-left">
           <h4 className="text-2xl font-bold">Welcome back,</h4>
           <p>Nam Nguyen</p>
         </div>
-        <Button variant="secondary" onClick={() => setIsDialogOpen(true)}>
-          Book appointment
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="secondary" onClick={() => setIsCreateAppointmentOpen(true)}>
+            Create appointment
+          </Button>
+          <Button variant="outline" onClick={() => setIsDialogOpen(true)}>
+            Create Pre-admission
+          </Button>
+        </div>
       </div>
-      {/* <form onSubmit={handleSubmit} className="flex gap-2">
-        <SearchBar placeholder="Search by name, phone, or industry..." value={text} handleChange={setText} />
-        <Button type="submit">Search</Button>
-      </form> */}
 
       <Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
         <DialogContent className="h-dvh w-dvw max-w-none rounded-none p-0 sm:max-w-none [&>button]:hidden">
@@ -145,10 +117,17 @@ export default function HomePage() {
         </DialogContent>
       </Dialog>
 
+      <CreateAppointmentDialog
+        open={isCreateAppointmentOpen}
+        onOpenChange={setIsCreateAppointmentOpen}
+        onCreate={handleCreateAppointment}
+      />
+
       <div className="mt-10 grid gap-5 lg:grid-cols-2">
-        <HomeAppointmentView title="Upcoming appointments" appointments={upcomingAppointments} />
-        <HomeAppointmentView title="Previous appointments" appointments={previousAppointments} />
+        <HomeAppointmentView title="Upcoming appointments" appointments={appointments?.upcoming ?? []} />
+        <HomeAppointmentView title="Previous appointments" appointments={appointments?.previous ?? []} />
       </div>
+      <Toaster />
     </div>
   );
 }

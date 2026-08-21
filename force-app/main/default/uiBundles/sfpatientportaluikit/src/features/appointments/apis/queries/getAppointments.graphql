@@ -1,0 +1,31 @@
+query GetAppointments($contactId: ID!) {
+  uiapi {
+    query {
+      ServiceAppointment(
+        first: 6
+        where: { ContactId: { eq: $contactId } }
+        orderBy: { SchedStartTime: { order: DESC } }
+      ) {
+        edges {
+          node {
+            Id @optional
+            Subject @optional {
+              value
+            }
+            SchedStartTime @optional {
+              value
+              displayValue
+            }
+            Status @optional {
+              value
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+}
