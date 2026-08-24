@@ -1338,6 +1338,7 @@ export type ApprovalSubmission_RelatedRecord_Filters = {
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   PaymentCreditLinePayment?: InputMaybe<PaymentCreditLinePayment_Filter>;
   PaymentCreditTransaction?: InputMaybe<PaymentCreditTransaction_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyJobSession?: InputMaybe<PrivacyJobSession_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
@@ -1630,6 +1631,7 @@ export type ApprovalWorkItem_RelatedRecord_Filters = {
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   PaymentCreditLinePayment?: InputMaybe<PaymentCreditLinePayment_Filter>;
   PaymentCreditTransaction?: InputMaybe<PaymentCreditTransaction_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyJobSession?: InputMaybe<PrivacyJobSession_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
@@ -2144,6 +2146,7 @@ export type Attachment_Parent_Filters = {
   PartnerFundClaim?: InputMaybe<PartnerFundClaim_Filter>;
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   Product2?: InputMaybe<Product2_Filter>;
   Promotion?: InputMaybe<Promotion_Filter>;
@@ -4261,6 +4264,7 @@ export type ContactRequest_What_Filters = {
   Case?: InputMaybe<Case_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Opportunity?: InputMaybe<Opportunity_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   VoiceCall?: InputMaybe<VoiceCall_Filter>;
   WorkOrder?: InputMaybe<WorkOrder_Filter>;
 };
@@ -4646,6 +4650,7 @@ export type ContentDocumentLink_LinkedEntity_Filters = {
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProblemIncident?: InputMaybe<ProblemIncident_Filter>;
@@ -5055,6 +5060,7 @@ export type ContentVersion_FirstPublishLocation_Filters = {
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProblemIncident?: InputMaybe<ProblemIncident_Filter>;
@@ -7766,6 +7772,7 @@ export type DuplicateRecordItem_Record_Filters = {
   Individual?: InputMaybe<Individual_Filter>;
   Lead?: InputMaybe<Lead_Filter>;
   Name?: InputMaybe<Name_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
 };
 
 export type DuplicateRecordSet_Filter = {
@@ -7912,6 +7919,7 @@ export type EmailMessage_RelatedTo_Filters = {
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProcessException?: InputMaybe<ProcessException_Filter>;
@@ -8463,6 +8471,7 @@ export type Event_What_Filters = {
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProcessException?: InputMaybe<ProcessException_Filter>;
@@ -8783,6 +8792,7 @@ export type FeedItem_Parent_Filters = {
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProblemIncident?: InputMaybe<ProblemIncident_Filter>;
@@ -8899,7 +8909,7 @@ export type FinanceBalanceSnapshot_Filter = {
   LastModifiedDate?: InputMaybe<DateTimeOperators>;
   LastReferencedDate?: InputMaybe<DateTimeOperators>;
   LastViewedDate?: InputMaybe<DateTimeOperators>;
-  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  LegalEntity?: InputMaybe<FinanceBalanceSnapshot_LegalEntity_Filters>;
   LegalEntityId?: InputMaybe<IdOperators>;
   OriginalEventType?: InputMaybe<StringOperators>;
   OriginalReferenceEntityType?: InputMaybe<StringOperators>;
@@ -8918,6 +8928,12 @@ export type FinanceBalanceSnapshot_Filter = {
   or?: InputMaybe<Array<InputMaybe<FinanceBalanceSnapshot_Filter>>>;
 };
 
+export type FinanceBalanceSnapshot_LegalEntity_Filters = {
+  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
+};
+
 export type FinanceBalanceSnapshot_Owner_Filters = {
   Group?: InputMaybe<Group_Filter>;
   Name?: InputMaybe<Name_Filter>;
@@ -8933,6 +8949,7 @@ export type FinanceBalanceSnapshot_ReferenceEntity_Filters = {
   Name?: InputMaybe<Name_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentLineInvoice?: InputMaybe<PaymentLineInvoice_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   RefundLinePayment?: InputMaybe<RefundLinePayment_Filter>;
 };
 
@@ -8945,6 +8962,7 @@ export type FinanceTransaction_DestinationEntity_Filters = {
   Name?: InputMaybe<Name_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentLineInvoice?: InputMaybe<PaymentLineInvoice_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   RefundLinePayment?: InputMaybe<RefundLinePayment_Filter>;
 };
 
@@ -8981,7 +8999,7 @@ export type FinanceTransaction_Filter = {
   LastModifiedDate?: InputMaybe<DateTimeOperators>;
   LastReferencedDate?: InputMaybe<DateTimeOperators>;
   LastViewedDate?: InputMaybe<DateTimeOperators>;
-  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  LegalEntity?: InputMaybe<FinanceTransaction_LegalEntity_Filters>;
   LegalEntityId?: InputMaybe<IdOperators>;
   OriginalCreditGlAccountName?: InputMaybe<StringOperators>;
   OriginalCreditGlAccountNumber?: InputMaybe<StringOperators>;
@@ -9017,6 +9035,12 @@ export type FinanceTransaction_Filter = {
   or?: InputMaybe<Array<InputMaybe<FinanceTransaction_Filter>>>;
 };
 
+export type FinanceTransaction_LegalEntity_Filters = {
+  LegalEntity?: InputMaybe<LegalEntity_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
+};
+
 export type FinanceTransaction_Owner_Filters = {
   Group?: InputMaybe<Group_Filter>;
   Name?: InputMaybe<Name_Filter>;
@@ -9032,6 +9056,7 @@ export type FinanceTransaction_ParentReferenceEntity_Filters = {
   Name?: InputMaybe<Name_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentLineInvoice?: InputMaybe<PaymentLineInvoice_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   RefundLinePayment?: InputMaybe<RefundLinePayment_Filter>;
 };
 
@@ -9044,6 +9069,7 @@ export type FinanceTransaction_ReferenceEntity_Filters = {
   Name?: InputMaybe<Name_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentLineInvoice?: InputMaybe<PaymentLineInvoice_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   RefundLinePayment?: InputMaybe<RefundLinePayment_Filter>;
 };
 
@@ -9056,6 +9082,7 @@ export type FinanceTransaction_SourceEntity_Filters = {
   Name?: InputMaybe<Name_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentLineInvoice?: InputMaybe<PaymentLineInvoice_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   RefundLinePayment?: InputMaybe<RefundLinePayment_Filter>;
 };
 
@@ -9478,6 +9505,7 @@ export type FlowOrchestrationWorkItem_RelatedRecord_Filters = {
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   PaymentCreditLinePayment?: InputMaybe<PaymentCreditLinePayment_Filter>;
   PaymentCreditTransaction?: InputMaybe<PaymentCreditTransaction_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyJobSession?: InputMaybe<PrivacyJobSession_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
@@ -10609,6 +10637,7 @@ export type InventoryItemReservation_ItemReservationSource_Filters = {
   FulfillmentOrderLineItem?: InputMaybe<FulfillmentOrderLineItem_Filter>;
   Name?: InputMaybe<Name_Filter>;
   OrderItem?: InputMaybe<OrderItem_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   ReturnOrderLineItem?: InputMaybe<ReturnOrderLineItem_Filter>;
   WorkOrderLineItem?: InputMaybe<WorkOrderLineItem_Filter>;
 };
@@ -10658,6 +10687,7 @@ export type InventoryReservation_ReservationSource_Filters = {
   FulfillmentOrder?: InputMaybe<FulfillmentOrder_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Order?: InputMaybe<Order_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   ReturnOrder?: InputMaybe<ReturnOrder_Filter>;
   WebCart?: InputMaybe<WebCart_Filter>;
   WorkOrder?: InputMaybe<WorkOrder_Filter>;
@@ -11199,6 +11229,8 @@ export type JoinInput = {
   PermissionSet?: InputMaybe<PermissionSet_Filter>;
   PermissionSetGroup?: InputMaybe<PermissionSetGroup_Filter>;
   PermissionSetLicense?: InputMaybe<PermissionSetLicense_Filter>;
+  PreAdmission__History?: InputMaybe<PreAdmission__History_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Pricebook2?: InputMaybe<Pricebook2_Filter>;
   Pricebook2History?: InputMaybe<Pricebook2History_Filter>;
   PricebookEntry?: InputMaybe<PricebookEntry_Filter>;
@@ -13158,6 +13190,7 @@ export type Note_Parent_Filters = {
   PartnerFundClaim?: InputMaybe<PartnerFundClaim_Filter>;
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   Product2?: InputMaybe<Product2_Filter>;
   Promotion?: InputMaybe<Promotion_Filter>;
@@ -13284,6 +13317,7 @@ export type ObjectRelatedUrl_Parent_Filters = {
   Account?: InputMaybe<Account_Filter>;
   Contact?: InputMaybe<Contact_Filter>;
   Name?: InputMaybe<Name_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Product2?: InputMaybe<Product2_Filter>;
   ProductCategory?: InputMaybe<ProductCategory_Filter>;
 };
@@ -15979,6 +16013,109 @@ export type PicklistOperators = {
   nin?: InputMaybe<Array<InputMaybe<Scalars['Picklist']['input']>>>;
 };
 
+export type PreAdmission__History_Filter = {
+  CreatedBy?: InputMaybe<User_Filter>;
+  CreatedById?: InputMaybe<IdOperators>;
+  CreatedDate?: InputMaybe<DateTimeOperators>;
+  DataType?: InputMaybe<PicklistOperators>;
+  Field?: InputMaybe<PicklistOperators>;
+  Id?: InputMaybe<IdOperators>;
+  IsDeleted?: InputMaybe<BooleanOperators>;
+  NewvalNumber?: InputMaybe<DoubleOperators>;
+  NewvalString?: InputMaybe<StringOperators>;
+  OldvalNumber?: InputMaybe<DoubleOperators>;
+  OldvalString?: InputMaybe<StringOperators>;
+  Parent?: InputMaybe<PreAdmission__C_Filter>;
+  ParentId?: InputMaybe<IdOperators>;
+  and?: InputMaybe<Array<InputMaybe<PreAdmission__History_Filter>>>;
+  not?: InputMaybe<PreAdmission__History_Filter>;
+  or?: InputMaybe<Array<InputMaybe<PreAdmission__History_Filter>>>;
+};
+
+export type PreAdmission__CCreateRepresentation = {
+  AVS_Number__c?: InputMaybe<Scalars['String']['input']>;
+  Card_Number__c?: InputMaybe<Scalars['String']['input']>;
+  Contact__c?: InputMaybe<Scalars['IdOrRef']['input']>;
+  Date_Of_Birth__c?: InputMaybe<Scalars['Date']['input']>;
+  Employer_City__c?: InputMaybe<Scalars['String']['input']>;
+  Employer_Postal_Code__c?: InputMaybe<Scalars['String']['input']>;
+  Employer__c?: InputMaybe<Scalars['String']['input']>;
+  First_Name__c?: InputMaybe<Scalars['String']['input']>;
+  Form_Version__c?: InputMaybe<Scalars['String']['input']>;
+  Gender__c?: InputMaybe<Scalars['Picklist']['input']>;
+  Insurance_Provider__c?: InputMaybe<Scalars['String']['input']>;
+  Last_Name__c?: InputMaybe<Scalars['String']['input']>;
+  Mailing_City__c?: InputMaybe<Scalars['String']['input']>;
+  Mailing_State__c?: InputMaybe<Scalars['String']['input']>;
+  Mailing_Street__c?: InputMaybe<Scalars['String']['input']>;
+  Marital_Status__c?: InputMaybe<Scalars['Picklist']['input']>;
+  Nationality__c?: InputMaybe<Scalars['String']['input']>;
+  OwnerId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  Place_Of_Birth__c?: InputMaybe<Scalars['String']['input']>;
+  Profession__c?: InputMaybe<Scalars['Picklist']['input']>;
+  Salutation__c?: InputMaybe<Scalars['Picklist']['input']>;
+  Status__c?: InputMaybe<Scalars['Picklist']['input']>;
+  Submitted_At__c?: InputMaybe<Scalars['DateTime']['input']>;
+  Supplementary_Insurance__c?: InputMaybe<Scalars['String']['input']>;
+  Telephone__c?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  Urgent_Contact_Relationship__c?: InputMaybe<Scalars['String']['input']>;
+  Urgent_Contact_Telephone__c?: InputMaybe<Scalars['PhoneNumber']['input']>;
+};
+
+export type PreAdmission__C_Filter = {
+  AVS_Number__c?: InputMaybe<StringOperators>;
+  Card_Number__c?: InputMaybe<StringOperators>;
+  Contact__c?: InputMaybe<IdOperators>;
+  Contact__r?: InputMaybe<Contact_Filter>;
+  CreatedBy?: InputMaybe<User_Filter>;
+  CreatedById?: InputMaybe<IdOperators>;
+  CreatedDate?: InputMaybe<DateTimeOperators>;
+  Date_Of_Birth__c?: InputMaybe<DateOperators>;
+  Employer_City__c?: InputMaybe<StringOperators>;
+  Employer_Postal_Code__c?: InputMaybe<StringOperators>;
+  Employer__c?: InputMaybe<StringOperators>;
+  First_Name__c?: InputMaybe<StringOperators>;
+  Form_Version__c?: InputMaybe<StringOperators>;
+  Gender__c?: InputMaybe<PicklistOperators>;
+  Id?: InputMaybe<IdOperators>;
+  Insurance_Provider__c?: InputMaybe<StringOperators>;
+  IsDeleted?: InputMaybe<BooleanOperators>;
+  LastActivityDate?: InputMaybe<DateOperators>;
+  LastModifiedBy?: InputMaybe<User_Filter>;
+  LastModifiedById?: InputMaybe<IdOperators>;
+  LastModifiedDate?: InputMaybe<DateTimeOperators>;
+  LastReferencedDate?: InputMaybe<DateTimeOperators>;
+  LastViewedDate?: InputMaybe<DateTimeOperators>;
+  Last_Name__c?: InputMaybe<StringOperators>;
+  Mailing_City__c?: InputMaybe<StringOperators>;
+  Mailing_State__c?: InputMaybe<StringOperators>;
+  Mailing_Street__c?: InputMaybe<StringOperators>;
+  Marital_Status__c?: InputMaybe<PicklistOperators>;
+  Name?: InputMaybe<StringOperators>;
+  Nationality__c?: InputMaybe<StringOperators>;
+  Owner?: InputMaybe<PreAdmission__C_Owner_Filters>;
+  OwnerId?: InputMaybe<IdOperators>;
+  Place_Of_Birth__c?: InputMaybe<StringOperators>;
+  Profession__c?: InputMaybe<PicklistOperators>;
+  Salutation__c?: InputMaybe<PicklistOperators>;
+  Status__c?: InputMaybe<PicklistOperators>;
+  Submitted_At__c?: InputMaybe<DateTimeOperators>;
+  Supplementary_Insurance__c?: InputMaybe<StringOperators>;
+  SystemModstamp?: InputMaybe<DateTimeOperators>;
+  Telephone__c?: InputMaybe<PhoneNumberOperators>;
+  Urgent_Contact_Relationship__c?: InputMaybe<StringOperators>;
+  Urgent_Contact_Telephone__c?: InputMaybe<PhoneNumberOperators>;
+  and?: InputMaybe<Array<InputMaybe<PreAdmission__C_Filter>>>;
+  not?: InputMaybe<PreAdmission__C_Filter>;
+  or?: InputMaybe<Array<InputMaybe<PreAdmission__C_Filter>>>;
+};
+
+export type PreAdmission__C_Owner_Filters = {
+  Group?: InputMaybe<Group_Filter>;
+  Name?: InputMaybe<Name_Filter>;
+  User?: InputMaybe<User_Filter>;
+};
+
 export type Pricebook2History_Filter = {
   CreatedBy?: InputMaybe<User_Filter>;
   CreatedById?: InputMaybe<IdOperators>;
@@ -16403,6 +16540,7 @@ export type ProcessException_AttachedTo_Filters = {
   OrderItem?: InputMaybe<OrderItem_Filter>;
   Payment?: InputMaybe<Payment_Filter>;
   PaymentAuthorization?: InputMaybe<PaymentAuthorization_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   ReturnOrder?: InputMaybe<ReturnOrder_Filter>;
   WebCart?: InputMaybe<WebCart_Filter>;
   WebStore?: InputMaybe<WebStore_Filter>;
@@ -16613,6 +16751,7 @@ export type ProcessInstance_TargetObject_Filters = {
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
   PaymentCreditLinePayment?: InputMaybe<PaymentCreditLinePayment_Filter>;
   PaymentCreditTransaction?: InputMaybe<PaymentCreditTransaction_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   ProcessException?: InputMaybe<ProcessException_Filter>;
   Product2?: InputMaybe<Product2_Filter>;
@@ -18754,6 +18893,7 @@ export type RecordAction_Record_Filters = {
   OperatingHours?: InputMaybe<OperatingHours_Filter>;
   Opportunity?: InputMaybe<Opportunity_Filter>;
   Order?: InputMaybe<Order_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Pricebook2?: InputMaybe<Pricebook2_Filter>;
   PricebookEntry?: InputMaybe<PricebookEntry_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
@@ -19591,6 +19731,58 @@ export type ServiceAppointmentAttendee_Owner_Filters = {
   Group?: InputMaybe<Group_Filter>;
   Name?: InputMaybe<Name_Filter>;
   User?: InputMaybe<User_Filter>;
+};
+
+export type ServiceAppointmentCreateRepresentation = {
+  ActualDuration?: InputMaybe<Scalars['Double']['input']>;
+  ActualEndTime?: InputMaybe<Scalars['DateTime']['input']>;
+  ActualStartTime?: InputMaybe<Scalars['DateTime']['input']>;
+  AdditionalInformation?: InputMaybe<Scalars['String']['input']>;
+  AppointmentCategoryId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  AppointmentInvitationId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  AppointmentMode?: InputMaybe<Scalars['Picklist']['input']>;
+  AppointmentType?: InputMaybe<Scalars['Picklist']['input']>;
+  ApptBookingInfoUrl?: InputMaybe<Scalars['LongTextArea']['input']>;
+  ArrivalWindowEndTime?: InputMaybe<Scalars['DateTime']['input']>;
+  ArrivalWindowStartTime?: InputMaybe<Scalars['DateTime']['input']>;
+  AttendeeLimit?: InputMaybe<Scalars['Int']['input']>;
+  CancellationReason?: InputMaybe<Scalars['String']['input']>;
+  CheckedInTime?: InputMaybe<Scalars['DateTime']['input']>;
+  City?: InputMaybe<Scalars['String']['input']>;
+  Comments?: InputMaybe<Scalars['String']['input']>;
+  ContactId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  Country?: InputMaybe<Scalars['String']['input']>;
+  CountryCode?: InputMaybe<Scalars['Picklist']['input']>;
+  Description?: InputMaybe<Scalars['LongTextArea']['input']>;
+  DueDate?: InputMaybe<Scalars['DateTime']['input']>;
+  Duration?: InputMaybe<Scalars['Double']['input']>;
+  DurationType?: InputMaybe<Scalars['Picklist']['input']>;
+  EarliestStartTime?: InputMaybe<Scalars['DateTime']['input']>;
+  Email?: InputMaybe<Scalars['Email']['input']>;
+  EngagementChannelTypeId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  GeocodeAccuracy?: InputMaybe<Scalars['Picklist']['input']>;
+  GroupAppointmentAccessType?: InputMaybe<Scalars['Picklist']['input']>;
+  IsAnonymousBooking?: InputMaybe<Scalars['Boolean']['input']>;
+  IsOffsiteAppointment?: InputMaybe<Scalars['Boolean']['input']>;
+  Latitude?: InputMaybe<Scalars['Latitude']['input']>;
+  Longitude?: InputMaybe<Scalars['Longitude']['input']>;
+  OwnerId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  ParentRecordId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  Phone?: InputMaybe<Scalars['PhoneNumber']['input']>;
+  PostalCode?: InputMaybe<Scalars['String']['input']>;
+  ReceiptOrderId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  SchedEndTime?: InputMaybe<Scalars['DateTime']['input']>;
+  SchedStartTime?: InputMaybe<Scalars['DateTime']['input']>;
+  ServiceNote?: InputMaybe<Scalars['LongTextArea']['input']>;
+  ServiceTerritoryId?: InputMaybe<Scalars['IdOrRef']['input']>;
+  State?: InputMaybe<Scalars['String']['input']>;
+  StateCode?: InputMaybe<Scalars['Picklist']['input']>;
+  Status?: InputMaybe<Scalars['Picklist']['input']>;
+  Street?: InputMaybe<Scalars['TextArea']['input']>;
+  Subject?: InputMaybe<Scalars['String']['input']>;
+  TimeZone?: InputMaybe<Scalars['Picklist']['input']>;
+  Transaction?: InputMaybe<Scalars['String']['input']>;
+  WorkTypeId?: InputMaybe<Scalars['IdOrRef']['input']>;
 };
 
 export type ServiceAppointmentHistory_Filter = {
@@ -21086,6 +21278,7 @@ export type Task_What_Filters = {
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
   PartyConsent?: InputMaybe<PartyConsent_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   PrivacyRTBFRequest?: InputMaybe<PrivacyRtbfRequest_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ProcessException?: InputMaybe<ProcessException_Filter>;
@@ -21287,6 +21480,7 @@ export type TopicAssignment_Entity_Filters = {
   PartnerFundClaim?: InputMaybe<PartnerFundClaim_Filter>;
   PartnerFundRequest?: InputMaybe<PartnerFundRequest_Filter>;
   PartnerMarketingBudget?: InputMaybe<PartnerMarketingBudget_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Problem?: InputMaybe<Problem_Filter>;
   ResourceAbsence?: InputMaybe<ResourceAbsence_Filter>;
   ResourcePreference?: InputMaybe<ResourcePreference_Filter>;
@@ -21513,6 +21707,7 @@ export type UserDefinedLabelAssignment_Item_Filters = {
   Lead?: InputMaybe<Lead_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Opportunity?: InputMaybe<Opportunity_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   Task?: InputMaybe<Task_Filter>;
 };
 
@@ -22219,6 +22414,7 @@ export type VoiceCall_RelatedRecord_Filters = {
   Lead?: InputMaybe<Lead_Filter>;
   Name?: InputMaybe<Name_Filter>;
   Opportunity?: InputMaybe<Opportunity_Filter>;
+  PreAdmission__c?: InputMaybe<PreAdmission__C_Filter>;
   WorkOrder?: InputMaybe<WorkOrder_Filter>;
 };
 
@@ -23432,6 +23628,27 @@ export type SearchAccountsQueryVariables = Exact<{
 
 
 export type SearchAccountsQuery = { uiapi: { query: { Account?: { totalCount: number, edges?: Array<{ node?: { Id: string, Name?: { value?: string | null, displayValue?: string | null } | null, Industry?: { value?: string | null, displayValue?: string | null } | null, Type?: { value?: string | null, displayValue?: string | null } | null, Phone?: { value?: string | null, displayValue?: string | null } | null, Owner?: { Name?: { value?: string | null, displayValue?: string | null } | null } | null, AnnualRevenue?: { value?: number | null, displayValue?: string | null } | null } | null } | null> | null, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null, startCursor?: string | null } } | null } } };
+
+export type CreateAppointmentMutationVariables = Exact<{
+  appointment: ServiceAppointmentCreateRepresentation;
+}>;
+
+
+export type CreateAppointmentMutation = { uiapi: { ServiceAppointmentCreate?: { Record?: { Id: string, Subject?: { value?: string | null } | null, SchedStartTime?: { value?: string | null } | null, SchedEndTime?: { value?: string | null } | null, Status?: { value?: string | null } | null } | null } | null } };
+
+export type GetAppointmentsQueryVariables = Exact<{
+  contactId: Scalars['ID']['input'];
+}>;
+
+
+export type GetAppointmentsQuery = { uiapi: { query: { ServiceAppointment?: { edges?: Array<{ node?: { Id: string, Subject?: { value?: string | null } | null, SchedStartTime?: { value?: string | null, displayValue?: string | null } | null, Status?: { value?: string | null } | null } | null } | null> | null, pageInfo: { hasNextPage: boolean, endCursor?: string | null } } | null } } };
+
+export type CreatePreAdmissionMutationVariables = Exact<{
+  preAdmission: PreAdmission__CCreateRepresentation;
+}>;
+
+
+export type CreatePreAdmissionMutation = { uiapi: { PreAdmission__cCreate?: { Record?: { Id: string, Name?: { value?: string | null } | null, Status__c?: { value?: string | null } | null } | null } | null } };
 
 export type UpdateProfileContactMutationVariables = Exact<{
   id: Scalars['IdOrRef']['input'];

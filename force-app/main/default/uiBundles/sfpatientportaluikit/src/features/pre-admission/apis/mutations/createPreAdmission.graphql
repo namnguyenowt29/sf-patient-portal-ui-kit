@@ -1,0 +1,15 @@
+mutation CreatePreAdmission($preAdmission: PreAdmission__cCreateRepresentation!) {
+  uiapi(input: { allOrNone: true }) {
+    PreAdmission__cCreate(input: { PreAdmission__c: $preAdmission }) {
+      Record {
+        Id @optional
+        Name @optional {
+          value
+        }
+        Status__c @optional {
+          value
+        }
+      }
+    }
+  }
+}

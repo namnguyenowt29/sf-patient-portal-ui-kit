@@ -15,14 +15,21 @@ import {
   insuranceDefaultValues,
   insuranceFormSchema,
   InsuranceFormFields,
+  urgentContactDefaultValues,
+  urgentContactFormSchema,
+  UrgentContactFormFields,
 } from "@/components/forms";
 import { StatusAlert } from "@/components/alerts/status-alert";
-import { Button, Stepper, StepperItem } from "@/components/ui";
+import { Button, Spinner, Stepper, StepperItem } from "@/components/ui";
+import { toast } from "@/components/ui/sonner";
+import { preAdmissionApi } from "@/features/pre-admission/apis/preAdmissionApi";
 import { useAppForm } from "@/hooks/form";
+import { useAuth } from "@/hooks/useAuth";
 
 const preAdmissionDefaultValues = {
   ...identityDefaultValues,
   ...contactDetailDefaultValues,
+  ...urgentContactDefaultValues,
   ...employerDefaultValues,
   ...insuranceDefaultValues,
 };
@@ -30,8 +37,14 @@ const preAdmissionDefaultValues = {
 const preAdmissionFormSchema = z.object({
   ...identityFormSchema.shape,
   ...contactDetailFormSchema.shape,
+  ...urgentContactFormSchema.shape,
   ...employerFormSchema.shape,
   ...insuranceFormSchema.shape,
+});
+
+const contactDetailsStepFormSchema = z.object({
+  ...contactDetailFormSchema.shape,
+  ...urgentContactFormSchema.shape,
 });
 
 const preAdmissionFields = createFieldMap(preAdmissionDefaultValues);
@@ -57,8 +70,15 @@ const steps = [
     number: 2,
     label: "Contact details",
     title: "Your contact details",
-    schema: contactDetailFormSchema,
-    fieldNames: ["telephone", "mailingStreet", "mailingCity", "mailingState"],
+    schema: contactDetailsStepFormSchema,
+    fieldNames: [
+      "telephone",
+      "mailingStreet",
+      "mailingCity",
+      "mailingState",
+      "relationship",
+      "urgentContactTelephone",
+    ],
   },
   {
     number: 3,
@@ -122,11 +142,25 @@ export function PreAdmissionForm({
   onDiscardChanges,
   onClose,
 }: PreAdmissionFormProps) {
+  const { user } = useAuth();
   const form = useAppForm({
     defaultValues: preAdmissionDefaultValues,
     validators: { onChange: preAdmissionFormSchema, onSubmit: preAdmissionFormSchema },
-    onSubmit: ({ value }) => {
-      console.log("Pre-admission form submitted", value);
+    onSubmit: async ({ value }) => {
+      try {
+        const preAdmission = await preAdmissionApi.createPreAdmissionForUser(user?.id ?? "", value);
+        form.reset();
+        onClose();
+        toast.success("Pre-admission submitted", {
+          description: preAdmission.number
+            ? `${preAdmission.number} has been created successfully.`
+            : "Your pre-admission has been created successfully.",
+        });
+      } catch (error) {
+        toast.error("Unable to submit pre-admission", {
+          description: error instanceof Error ? error.message : "Please try again.",
+        });
+      }
     },
   });
   const currentStepDetails = getStep(currentStep);
@@ -163,7 +197,7 @@ export function PreAdmissionForm({
   };
 
   const handleStepChange = (nextStep: number) => {
-    if (!isCurrentStep(nextStep)) {
+    if (form.state.isSubmitting || !isCurrentStep(nextStep)) {
       return;
     }
 
@@ -181,13 +215,12 @@ export function PreAdmissionForm({
     <form.AppForm>
       <form
         className="flex min-h-0 flex-1 flex-col"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
 
           if (isFinalStep) {
             if (validateCurrentStep()) {
-              form.handleSubmit();
-              onClose();
+              await form.handleSubmit();
             }
             return;
           }
@@ -232,18 +265,35 @@ export function PreAdmissionForm({
             )}
 
             {currentStep === 1 && <IdentityFormFields form={form} fields={preAdmissionFields} />}
-            {currentStep === 2 && <ContactDetailFormFields form={form} fields={preAdmissionFields} />}
+            {currentStep === 2 && (
+              <>
+                <ContactDetailFormFields form={form} fields={preAdmissionFields} />
+                <UrgentContactFormFields form={form} fields={preAdmissionFields} />
+              </>
+            )}
             {currentStep === 3 && <EmployerFormFields form={form} fields={preAdmissionFields} />}
             {currentStep === 4 && <InsuranceFormFields form={form} fields={preAdmissionFields} />}
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 border-t border-gray-300 bg-white px-6 py-4">
-          <Button type="button" variant="secondary" onClick={goToPreviousStep} disabled={currentStep === 1}>
-            Back
-          </Button>
-          <Button type="submit">{isFinalStep ? "Submit pre-admission" : "Continue"}</Button>
-        </div>
+        <form.Subscribe selector={(state) => state.isSubmitting}>
+          {(isSubmitting) => (
+            <div className="flex justify-end gap-2 border-t border-gray-300 bg-white px-6 py-4">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={goToPreviousStep}
+                disabled={currentStep === 1 || isSubmitting}
+              >
+                Back
+              </Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting && <Spinner />}
+                {isSubmitting ? "Submitting..." : isFinalStep ? "Submit pre-admission" : "Continue"}
+              </Button>
+            </div>
+          )}
+        </form.Subscribe>
       </form>
     </form.AppForm>
   );

@@ -1,0 +1,21 @@
+mutation CreateAppointment($appointment: ServiceAppointmentCreateRepresentation!) {
+  uiapi(input: { allOrNone: true }) {
+    ServiceAppointmentCreate(input: { ServiceAppointment: $appointment }) {
+      Record {
+        Id @optional
+        Subject @optional {
+          value
+        }
+        SchedStartTime @optional {
+          value
+        }
+        SchedEndTime @optional {
+          value
+        }
+        Status @optional {
+          value
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employer__c</fullName>
+    <label>Employer</label>
+    <description>Preserves the employer name captured in the pre-admission employer snapshot.</description>
+    <inlineHelpText>Enter the patient's employer name.</inlineHelpText>
+    <length>255</length>
+    <type>Text</type>
+</CustomField>

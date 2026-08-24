@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Name__c</fullName>
+    <label>Last Name</label>
+    <description>Preserves the patient's last name at the time of pre-admission.</description>
+    <inlineHelpText>Enter the patient's last name as provided on the form.</inlineHelpText>
+    <length>80</length>
+    <type>Text</type>
+</CustomField>

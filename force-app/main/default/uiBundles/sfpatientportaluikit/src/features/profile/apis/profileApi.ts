@@ -245,6 +245,7 @@ function createProfileApi() {
   };
 
   return {
+    getCurrentContactId,
     getPatientProfileFromUser,
     updateIdentity,
     updateContactDetail,

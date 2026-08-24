@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employer_City__c</fullName>
+    <label>Employer City</label>
+    <description>Preserves the employer city as part of the pre-admission snapshot.</description>
+    <inlineHelpText>Enter the employer city; this does not replace the patient's mailing city.</inlineHelpText>
+    <length>80</length>
+    <type>Text</type>
+</CustomField>
